@@ -56,13 +56,15 @@ public class CharacterController : MonoBehaviour
     }
     private void Update()
     {
-        PlayerRigi.AddForce (new Vector2 (PlayerVeL,PlayerRigi.velocity.y)*Time.deltaTime);
+       // PlayerRigi.AddForce (new Vector2 (PlayerVeL,PlayerRigi.velocity.y)*Time.deltaTime);
+       // PlayerRigi.velocity = new Vector2(PlayerVeL, PlayerRigi.velocity.y);
 
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+        PlayerRigi.velocity = new Vector2(PlayerVeL, PlayerRigi.velocity.y);
         audioSource.Play();
         
    
@@ -115,6 +117,7 @@ public class CharacterController : MonoBehaviour
         yield return new WaitForSeconds(10f);
        // ImInIdle = false;
     }
+    
 
 
 
