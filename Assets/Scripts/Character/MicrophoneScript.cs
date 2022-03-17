@@ -1,13 +1,12 @@
+
 using System.Collections;
-using System;
-using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
 
-public class CharacterController : MonoBehaviour
-{
+public class MicrophoneScript : MonoBehaviour
+{ 
     public AudioClip audioClip;
     public AudioSource audioSource;
     public bool useMicro;
@@ -15,23 +14,16 @@ public class CharacterController : MonoBehaviour
     public AudioMixerGroup MixerGroupMicro, MixerGroupMaster;
     public int SampleWindow = 512;
 
-    public Rigidbody2D PlayerRigi;
-    public float PlayerVeL;
-
-    public float SkiJumpForce;
-
     public float AudioSignalMultiplier;
     public int ChangeMicro;
-    public float levelMax = 0;
-    public float levelMin = 1;
-    public float Thresh = 0.5f;
-    public bool Blow = false;
-    public float Sum;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
-     
-       
+
+
         if (useMicro)
         {
             /* if the Microphone list it's bigger than 0 (no Microphones), select one, the AudioJack is mostly readed as 0, but try
@@ -54,77 +46,40 @@ public class CharacterController : MonoBehaviour
             audioSource.outputAudioMixerGroup = MixerGroupMaster;
             audioSource.clip = audioClip;
         }
-        
+
 
     }
     private void Update()
     {
-       // PlayerRigi.AddForce (new Vector2 (PlayerVeL,PlayerRigi.velocity.y)*Time.deltaTime);
-       // PlayerRigi.velocity = new Vector2(PlayerVeL, PlayerRigi.velocity.y);
+
 
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        PlayerRigi.velocity = new Vector2(PlayerVeL, PlayerRigi.velocity.y);
-        audioSource.Play();
-        LevelMaxMin();
-        Sum = 0;
-        if (LevelMaxMin() >= 0)
-        {
-                for (float SkiLevel = 0.001f; SkiLevel < LevelMaxMin(); SkiLevel++)
-                {
-                    SkiJumpForce = SkiLevel;
-                    PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, SkiLevel));
-             
-                }
-        }
-
-    }
+   
 
     float LevelMaxMin()
     {
-
+        float levelMax = 0;
+        float levelMin = 100;
         float[] waveData = new float[SampleWindow];
         int micPosition = Microphone.GetPosition(null) - (SampleWindow + 1); // null means the first microphone
         if (micPosition < 0) return 0;
         audioClip.GetData(waveData, micPosition);
         // Getting a peak on the last 128 samples
-        levelMax = levelMax - 0.0015f*Time.deltaTime;
-
-        levelMin = levelMin + 0.00015f*Time.deltaTime;
- 
-
         for (int i = 0; i < SampleWindow; i++)
         {
-
-           float wavePeak = Mathf.Abs(waveData[i]);
-            Sum += wavePeak;
-;
-;
-            if (wavePeak > levelMax)
+            float wavePeak = waveData[i] * waveData[i];
+            if (levelMax < wavePeak)
             {
                 levelMax = wavePeak;
             }
-            if (wavePeak < levelMin)
+            if (levelMin > wavePeak)
             {
-                 levelMin = wavePeak;
-                Debug.Log(levelMin);
-               
+                levelMin = wavePeak;
             }
         }
-        Thresh = (levelMax - levelMin) / 2 + levelMin;
-        if (levelMax > Thresh && Blow == false)
-        {
-            Blow = true;
-        }
-        if (levelMin < Thresh && Blow == true)
-        {
-            Blow = false;
-        }
-
-        return levelMax*AudioSignalMultiplier;
+   
+        return levelMax * AudioSignalMultiplier;
     }
     private void OnTriggerEnter2D(Collider2D col)
     {
@@ -134,19 +89,19 @@ public class CharacterController : MonoBehaviour
         }
         if (col.tag == "Rock")
         {
-        
+
         }
     }
 
     IEnumerator FloorChecker()
     {
         yield return new WaitForSeconds(10f);
-       // ImInIdle = false;
+        // ImInIdle = false;
     }
-    
+
 
 
 
 }
-  
+
 
