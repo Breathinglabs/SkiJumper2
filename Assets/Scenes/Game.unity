@@ -6393,7 +6393,7 @@ MonoBehaviour:
   levelMax: 0
   levelMin: 100
   Thresh: 0.5
-  Blow: 0
+  IsBlowing: 0
   Sum: 0
 --- !u!1 &1367553520
 GameObject:
@@ -6466,7 +6466,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -3
+  m_SortingOrder: -32768
   m_Sprite: {fileID: 21300000, guid: 6c4034a786982d94bb949c87195298a4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
