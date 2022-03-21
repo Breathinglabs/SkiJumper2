@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 65426498318774704}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 8.01, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -101,3 +101,5 @@ MonoBehaviour:
   ZPos: 0
   LayerPos: 0
   IveMoved: 0
+  checker: {fileID: 8549698651153435922, guid: f68cfd8977d92b34f85d3962ed687e68, type: 3}
+  checkerScript: {fileID: 0}

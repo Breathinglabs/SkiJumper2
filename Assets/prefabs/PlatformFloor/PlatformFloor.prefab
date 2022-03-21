@@ -140,6 +140,8 @@ MonoBehaviour:
   MountainsToGen: 25
   Mountain: {fileID: 65426498318774704, guid: 735d3ba2a86c0db46840c0e42d16c7d8, type: 3}
   Clouds: {fileID: 0}
+  DelTime: 0
+  deleted: 0
 --- !u!1 &8549698651153435922
 GameObject:
   m_ObjectHideFlags: 0

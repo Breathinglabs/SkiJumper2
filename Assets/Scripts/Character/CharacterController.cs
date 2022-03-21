@@ -25,7 +25,7 @@ public class CharacterController : MonoBehaviour
     public float levelMax = 0;
     public float levelMin = 1;
     public float Thresh = 0.5f;
-    public bool Blow = false;
+    public bool IsBlowing = false;
     public float Sum;
     // Start is called before the first frame update
     void Start()
@@ -98,11 +98,9 @@ public class CharacterController : MonoBehaviour
 
         for (int i = 0; i < SampleWindow; i++)
         {
-
            float wavePeak = Mathf.Abs(waveData[i]);
             Sum += wavePeak;
-;
-;
+
             if (wavePeak > levelMax)
             {
                 levelMax = wavePeak;
@@ -115,13 +113,13 @@ public class CharacterController : MonoBehaviour
             }
         }
         Thresh = (levelMax - levelMin) / 2 + levelMin;
-        if (levelMax > Thresh && Blow == false)
+        if (levelMax > Thresh && IsBlowing == false)
         {
-            Blow = true;
+            IsBlowing = true;
         }
-        if (levelMin < Thresh && Blow == true)
+        if (levelMin < Thresh && IsBlowing == true)
         {
-            Blow = false;
+            IsBlowing = false;
         }
 
         return levelMax*AudioSignalMultiplier;
