@@ -15,6 +15,6 @@ public class Background_script : MonoBehaviour
     void Update()
     {
    
-        transform.Translate(new Vector2 (Player.transform.position.x*0.25f, 0)*Time.deltaTime, Space.World);
+       // transform.Translate(new Vector2 (Player.transform.position.x*0.25f, 0)*Time.deltaTime, Space.World)*Time.deltaTime, S;
     }
 }
