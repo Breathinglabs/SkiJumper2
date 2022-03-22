@@ -13,7 +13,9 @@ public class CharacterController : MonoBehaviour
     public bool useMicro;
     public string SelDevice;
     public AudioMixerGroup MixerGroupMicro, MixerGroupMaster;
-    public int SampleWindow = 512;
+    public int SWin700 = 700;
+    public int SWin64 = 64;
+
 
     public Rigidbody2D PlayerRigi;
     public float PlayerVeL;
@@ -24,9 +26,11 @@ public class CharacterController : MonoBehaviour
     public int ChangeMicro;
     public float levelMax = 0;
     public float levelMin = 1;
+    public float Average;
     public float Thresh = 0.5f;
     public bool IsBlowing = false;
     public float Sum;
+    public float Avrg;
     // Start is called before the first frame update
     void Start()
     {
@@ -69,36 +73,73 @@ public class CharacterController : MonoBehaviour
     {
         PlayerRigi.velocity = new Vector2(PlayerVeL, PlayerRigi.velocity.y);
         audioSource.Play();
-        LevelMaxMin();
+        SizeBig();
         Sum = 0;
-        if (LevelMaxMin() >= 0)
+        if (IsBlowing)
         {
-                for (float SkiLevel = 0.001f; SkiLevel < LevelMaxMin(); SkiLevel++)
-                {
-                    SkiJumpForce = SkiLevel;
-                    PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, SkiLevel));
-             
-                }
+            PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, 200000));
         }
 
     }
 
-    float LevelMaxMin()
+ void SizeBig()
     {
 
-        float[] waveData = new float[SampleWindow];
-        int micPosition = Microphone.GetPosition(null) - (SampleWindow + 1); // null means the first microphone
-        if (micPosition < 0) return 0;
-        audioClip.GetData(waveData, micPosition);
+        float[] BigWindow = new float[SWin700];
+        int micPosition = Microphone.GetPosition(null) - (SWin700 + 1); // null means the first microphone
+       // if (micPosition < 0) return 0;
+        audioClip.GetData(BigWindow, micPosition);
         // Getting a peak on the last 128 samples
         levelMax = levelMax - 0.0015f*Time.deltaTime;
 
         levelMin = levelMin + 0.00015f*Time.deltaTime;
  
 
-        for (int i = 0; i < SampleWindow; i++)
+        for (int i = 0; i < SWin700; i++)
         {
-           float wavePeak = Mathf.Abs(waveData[i]);
+       
+           float waveAbs = Mathf.Abs(BigWindow[i]);
+            Sum += waveAbs;
+           Avrg = Sum / SWin700;
+            if (waveAbs > levelMax)
+            {
+                levelMax = waveAbs;
+            }
+            if (waveAbs < levelMin)
+            {
+                 levelMin = waveAbs;
+                Debug.Log(levelMin);
+               
+            }
+        }
+        Thresh = (levelMax - levelMin) / 2 + levelMin;
+        if (Avrg > Thresh && IsBlowing == false)
+        {
+            IsBlowing = true;
+        }
+        if (Avrg < Thresh && IsBlowing == true)
+        {
+            IsBlowing = false;
+        }
+
+        
+    }
+    /*
+    float SizeSmall()
+    {
+
+        float[] SmallWindow = new float[SWin64];
+        float SWinAver = SmallWindow.Average();
+        int micPosition = Microphone.GetPosition(null) - (SWin64 + 1); // null means the first microphone
+        if (micPosition < 0) return 0;
+        audioClip.GetData(SmallWindow, micPosition);
+        Average-= 0.0015f * Time.deltaTime;
+
+
+
+        for (int i = 0; i < SWin64; i++)
+        {
+            float wavePeak = Mathf.Abs(SmallWindow[i]);
             Sum += wavePeak;
 
             if (wavePeak > levelMax)
@@ -107,9 +148,9 @@ public class CharacterController : MonoBehaviour
             }
             if (wavePeak < levelMin)
             {
-                 levelMin = wavePeak;
+                levelMin = wavePeak;
                 Debug.Log(levelMin);
-               
+
             }
         }
         Thresh = (levelMax - levelMin) / 2 + levelMin;
@@ -122,8 +163,9 @@ public class CharacterController : MonoBehaviour
             IsBlowing = false;
         }
 
-        return levelMax*AudioSignalMultiplier;
+        return levelMax * AudioSignalMultiplier;
     }
+    */
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.tag == "Angel")
