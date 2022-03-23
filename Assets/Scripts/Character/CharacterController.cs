@@ -173,9 +173,9 @@ public class CharacterController : MonoBehaviour
     */
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.tag == "Angel")
+        if (col.gameObject.CompareTag("Angel"))
         {
-
+           // PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, 50));
         }
         if (col.tag == "Rock")
         {
