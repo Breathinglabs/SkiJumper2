@@ -116,12 +116,12 @@ public class CharacterController : MonoBehaviour
             }
         }
         Thresh = (levelMax - levelMin) / 2 + levelMin;
-        if (Avrg > Thresh)
+        if (Avrg > Thresh && IsBlowing== false)
         {
             Debug.Log("YES");
             IsBlowing = true;
         }
-        if (Avrg < Thresh)
+        if (Avrg < Thresh && IsBlowing == true)
         {
             Debug.Log("NO");
             IsBlowing = false;
