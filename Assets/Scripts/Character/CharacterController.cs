@@ -26,7 +26,6 @@ public class CharacterController : MonoBehaviour
     public int ChangeMicro;
     public float levelMax = 0;
     public float levelMin = 1;
-    public float Average;
     public float Thresh = 0.5f;
     public bool IsBlowing = false;
     public float Sum;
@@ -58,7 +57,7 @@ public class CharacterController : MonoBehaviour
             audioSource.outputAudioMixerGroup = MixerGroupMaster;
             audioSource.clip = audioClip;
         }
-        
+        IsBlowing = false;
 
     }
     private void Update()
@@ -71,36 +70,42 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        SizeBig();
         PlayerRigi.velocity = new Vector2(PlayerVeL, PlayerRigi.velocity.y);
         audioSource.Play();
-        SizeBig();
+       
         Sum = 0;
         if (IsBlowing)
         {
-            PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, 200000));
+            PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, 35));
         }
 
     }
 
- void SizeBig()
+    public void SizeBig()
     {
 
         float[] BigWindow = new float[SWin700];
         int micPosition = Microphone.GetPosition(null) - (SWin700 + 1); // null means the first microphone
-       // if (micPosition < 0) return 0;
         audioClip.GetData(BigWindow, micPosition);
-        // Getting a peak on the last 128 samples
-        levelMax = levelMax - 0.0015f*Time.deltaTime;
 
+        // This get's the Max and Min level of the sample.
+        levelMax = levelMax - 0.0015f*Time.deltaTime;
         levelMin = levelMin + 0.00015f*Time.deltaTime;
  
 
         for (int i = 0; i < SWin700; i++)
         {
-       
-           float waveAbs = Mathf.Abs(BigWindow[i]);
-            Sum += waveAbs;
-           Avrg = Sum / SWin700;
+         
+            // Absolute
+               float waveAbs = Mathf.Abs(BigWindow[i]);
+             
+            // Average
+                Sum += waveAbs;
+            //Debug.Log(Sum);
+                Avrg = (Sum / SWin700)*10;
+          //  Debug.Log(Avrg);
+           
             if (waveAbs > levelMax)
             {
                 levelMax = waveAbs;
@@ -108,17 +113,17 @@ public class CharacterController : MonoBehaviour
             if (waveAbs < levelMin)
             {
                  levelMin = waveAbs;
-                Debug.Log(levelMin);
-               
             }
         }
         Thresh = (levelMax - levelMin) / 2 + levelMin;
-        if (Avrg > Thresh && IsBlowing == false)
+        if (Avrg > Thresh)
         {
+            Debug.Log("YES");
             IsBlowing = true;
         }
-        if (Avrg < Thresh && IsBlowing == true)
+        if (Avrg < Thresh)
         {
+            Debug.Log("NO");
             IsBlowing = false;
         }
 

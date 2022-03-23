@@ -6384,7 +6384,7 @@ MonoBehaviour:
   SelDevice: 
   MixerGroupMicro: {fileID: 319208358021351191, guid: d7bc2aec91e632743b252444ae027255, type: 2}
   MixerGroupMaster: {fileID: 24300002, guid: d7bc2aec91e632743b252444ae027255, type: 2}
-  SWin700: 0
+  SWin700: 700
   SWin64: 64
   PlayerRigi: {fileID: 1354910656}
   PlayerVeL: 20
@@ -6550,7 +6550,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1523376246}
-  - component: {fileID: 1523376247}
   m_Layer: 0
   m_Name: StartPlatform
   m_TagString: Untagged
@@ -6572,32 +6571,6 @@ Transform:
   m_Father: {fileID: 2139469519}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &1523376247
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1523376245}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.0047635827, y: 5.596236}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.018139265, y: 12.192474}
-  m_EdgeRadius: 0
 --- !u!1 &1540316487
 GameObject:
   m_ObjectHideFlags: 0
@@ -7019,8 +6992,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2139469515}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.5347, y: -3.68, z: 0}
-  m_LocalScale: {x: 31.280386, y: 1, z: 1}
+  m_LocalPosition: {x: 559.4582, y: -3.68, z: 0}
+  m_LocalScale: {x: 1135.1277, y: 1, z: 1}
   m_Children:
   - {fileID: 1523376246}
   m_Father: {fileID: 706297341}
@@ -7112,6 +7085,10 @@ PrefabInstance:
     - target: {fileID: 8549698651153435922, guid: f68cfd8977d92b34f85d3962ed687e68, type: 3}
       propertyPath: m_Name
       value: PlatformFloor
+      objectReference: {fileID: 0}
+    - target: {fileID: 8549698651153435922, guid: f68cfd8977d92b34f85d3962ed687e68, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f68cfd8977d92b34f85d3962ed687e68, type: 3}
