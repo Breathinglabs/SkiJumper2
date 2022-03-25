@@ -14,7 +14,8 @@ public class Assets_Sript : MonoBehaviour
     public bool IveMoved;
     public GameObject checker;
     public CheckerScript checkerScript;
-    public static int NextLyrMskM = 0;
+    public static int MountainNextLyrMskM = 0, CloudsNextLyrMskM = 0, 
+        PersonsNextLyrMskM = 0, SatelliteNextLyrMskM = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,9 +26,9 @@ public class Assets_Sript : MonoBehaviour
         {
             XPos = Random.Range(0, 50);
             YPos = Random.Range(0, 5);
-            ZPos = Random.Range(0, 2);
-            NextLyrMskM -= 1;
-            LayerPos = Random.Range(-10, 0);
+            ZPos = Random.Range(0, 0);
+            MountainNextLyrMskM -= 1;
+           // LayerPos = Random.Range(-10, 0);
 
         }
         if (ImACloud)
@@ -35,15 +36,14 @@ public class Assets_Sript : MonoBehaviour
             XPos = Random.Range(0, 20);
             YPos = Random.Range(7, 15);
             ZPos = Random.Range(0, 5);
-            NextLyrMskM -= 1;
-            LayerPos = Random.Range(-10, 0);
+            CloudsNextLyrMskM -= 1;
+           // LayerPos = Random.Range(-10, 0);
         }
         if (ImAPerson)
         {
             XPos = Random.Range(0, 160);
             YPos = Random.Range(0, 5);
             ZPos = Random.Range(0, 2);
-            NextLyrMskM -= 1;
             LayerPos = Random.Range(-10, 0);
         }
         if (ImAStaelite)
@@ -51,7 +51,6 @@ public class Assets_Sript : MonoBehaviour
             XPos = Random.Range(0, 160);
             YPos = Random.Range(0, 5);
             ZPos = Random.Range(0, 2);
-            NextLyrMskM -= 1;
             LayerPos = Random.Range(-10, 0);
         }
 
@@ -67,8 +66,9 @@ public class Assets_Sript : MonoBehaviour
         if (!IveMoved)
         {
             transform.position = PosAfterGen;
-            Sprite.sortingOrder = NextLyrMskM;
-           IveMoved = true;
+            if (ImAMountain) Sprite.sortingOrder = MountainNextLyrMskM;
+            if (ImACloud) Sprite.sortingOrder = CloudsNextLyrMskM;
+            IveMoved = true;
           //  Sprite.sortingOrder = LayerPos;
     
         }

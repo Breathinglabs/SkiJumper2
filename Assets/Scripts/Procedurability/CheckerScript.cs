@@ -82,6 +82,7 @@ public class CheckerScript : MonoBehaviour
     private void FixedUpdate()
     {
        // Vector3 upDir = new Vector2(transform.position.x, 1);
+       /*
         RaycastHit2D hit = Physics2D.Raycast(SpawnOBJ.transform.position, transform.up*Mathf.Infinity);
         Debug.DrawRay(SpawnOBJ.transform.position, transform.up*Mathf.Infinity, Color.green);
         if (hit.collider.name == "GroundCheck")
@@ -103,19 +104,25 @@ public class CheckerScript : MonoBehaviour
         {
 
         }
+       */
     }
-    /*
-    private void OnTriggerEnter2D(Collider2D col)
+
+      
+    
+     void OnTriggerEnter2D(Collider2D col)
     {
        
       if (col.gameObject.CompareTag("Player"))
         {
-            Instantiate(NEXTPlatformPrefab, EndPos.transform.position, EndPos.transform.rotation);
+            // 50 is the diference space between the EndPos position and the new platform pivot (which usually is on the center of the gameobject)
+            Vector3 NewPlatPos = new Vector3(EndPos.transform.position.x + 88f, EndPos.position.y, EndPos.position.z);
+            Instantiate(NEXTPlatformPrefab, NewPlatPos, EndPos.transform.rotation);
+            instantiated = true;
             StartCoroutine(DelPlatform());
         }
         
     }
-    */
+    
     IEnumerator DelHitRes()
     {
         yield return new WaitForSeconds(0.001f);
@@ -125,6 +132,7 @@ public class CheckerScript : MonoBehaviour
     IEnumerator DelPlatform()
     {
         yield return new WaitForSeconds(DelTime);
+        
         if (MountainsGenerated > MountainsToGen)
         {
             MountainsGenerated -= MountainsToGen;

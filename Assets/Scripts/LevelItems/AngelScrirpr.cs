@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class AngelScrirpr : MonoBehaviour
 {
-    public GameObject Player;
-    public Rigidbody2D PlayerRigi;
-    public float ElevatePlayer;
+   // public GameObject Player;
+   // public Rigidbody2D PlayerRigi;
+   //i public float ElevatePlayer;
 
     // Start is called before the first frame update
     void Start()
     {
-        Player = GameObject.FindWithTag("Player");
-        PlayerRigi = Player.GetComponent<Rigidbody2D>();
+       // Player = GameObject.FindWithTag("Player");
+        // PlayerRigi = Player.GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -25,8 +25,8 @@ public class AngelScrirpr : MonoBehaviour
        if (col.gameObject.CompareTag("Player"))
         {
             
-            PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, PlayerRigi.velocity.y * ElevatePlayer));
-            Debug.Log("UPPPPPPPPPPPPPPP");
+          //  PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, PlayerRigi.velocity.y * ElevatePlayer));
+           // Debug.Log("UPPPPPPPPPPPPPPP");
             Destroy(this.gameObject);
         }
     }
