@@ -14,18 +14,20 @@ public class Assets_Sript : MonoBehaviour
     public bool IveMoved;
     public GameObject checker;
     public CheckerScript checkerScript;
-    public static int MountainNextLyrMskM = 0, CloudsNextLyrMskM = 0, 
+    public int LeftRight;
+    public static int MountainNextLyrMskM = 0, CloudsNextLyrMskM = 0,
         PersonsNextLyrMskM = 0, SatelliteNextLyrMskM = 0;
     // Start is called before the first frame update
     void Start()
     {
         
         IveMoved = false;
+        LeftRight = Random.Range(-1, 1);
         Sprite = GetComponent<SpriteRenderer>();
         if (ImAMountain)
         {
-            XPos = Random.Range(0, 50);
-            YPos = Random.Range(0, 5);
+            XPos = Random.Range(0,25)*LeftRight;
+            YPos = Random.Range(0, 3);
             ZPos = Random.Range(0, 0);
             MountainNextLyrMskM -= 1;
            // LayerPos = Random.Range(-10, 0);
@@ -33,7 +35,7 @@ public class Assets_Sript : MonoBehaviour
         }
         if (ImACloud)
         {
-            XPos = Random.Range(0, 20);
+            XPos = Random.Range(0, 15)*LeftRight;
             YPos = Random.Range(7, 15);
             ZPos = Random.Range(0, 5);
             CloudsNextLyrMskM -= 1;
@@ -41,14 +43,14 @@ public class Assets_Sript : MonoBehaviour
         }
         if (ImAPerson)
         {
-            XPos = Random.Range(0, 160);
+            XPos = Random.Range(0, 15)*LeftRight;
             YPos = Random.Range(0, 5);
             ZPos = Random.Range(0, 2);
             LayerPos = Random.Range(-10, 0);
         }
         if (ImAStaelite)
         {
-            XPos = Random.Range(0, 160);
+            XPos = Random.Range(0, 160)*LeftRight;
             YPos = Random.Range(0, 5);
             ZPos = Random.Range(0, 2);
             LayerPos = Random.Range(-10, 0);

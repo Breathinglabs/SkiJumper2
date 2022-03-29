@@ -7,7 +7,7 @@ public class CheckerScript : MonoBehaviour
     public GameObject Player;
     public Transform EndPos;
     public GameObject THISPlatform;
-    public GameObject NEXTPlatformPrefab;
+    public GameObject NextPlatformPrefab1, NextPlatformPrefab2, NextPlatformPrefab3;
     public Transform AssetGen;
     public GameObject Mountain, Clouds;
     public int MountainsToGen, CloudsToGen;
@@ -25,7 +25,7 @@ public class CheckerScript : MonoBehaviour
         instantiated = false;
         detected = false;
         Player = GameObject.FindWithTag("Player");
-        DelTime = 10f;
+        DelTime = 7.5f;
         THISPlatform = transform.parent.gameObject;
 
 
@@ -72,9 +72,6 @@ public class CheckerScript : MonoBehaviour
         if (detected == true)
         {
             Debug.Log("Ola");
-           // Instantiate(NEXTPlatformPrefab, EndPos.transform.position, EndPos.transform.rotation);
-            //StartCoroutine(DelPlatform());
-            //detected = false;
 
         }
     }
@@ -115,8 +112,8 @@ public class CheckerScript : MonoBehaviour
       if (col.gameObject.CompareTag("Player"))
         {
             // 50 is the diference space between the EndPos position and the new platform pivot (which usually is on the center of the gameobject)
-            Vector3 NewPlatPos = new Vector3(EndPos.transform.position.x + 88f, EndPos.position.y, EndPos.position.z);
-            Instantiate(NEXTPlatformPrefab, NewPlatPos, EndPos.transform.rotation);
+            Vector3 NewPlatPos = new Vector3(EndPos.transform.position.x + 5f, EndPos.position.y, EndPos.position.z);
+            Instantiate(NextPlatformPrefab1, NewPlatPos, EndPos.transform.rotation);
             instantiated = true;
             StartCoroutine(DelPlatform());
         }

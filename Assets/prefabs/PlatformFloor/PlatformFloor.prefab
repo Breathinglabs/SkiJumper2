@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2841701795720592941}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.484, y: -0.07000005, z: 0}
+  m_LocalPosition: {x: 0.4631, y: -0.07000005, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6210407634172096498}
@@ -84,7 +84,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3313030660272185049}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.9642, y: -0.58, z: 0}
+  m_LocalPosition: {x: 1.355, y: -0.58, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6210407634172096498}
@@ -197,13 +197,15 @@ MonoBehaviour:
   Player: {fileID: 0}
   EndPos: {fileID: 3313030660272185048}
   THISPlatform: {fileID: 0}
-  NEXTPlatformPrefab: {fileID: 8549698651153435922}
+  NextPlatformPrefab1: {fileID: 8549698651153435922}
+  NextPlatformPrefab2: {fileID: 0}
+  NextPlatformPrefab3: {fileID: 0}
   AssetGen: {fileID: 1704759337782809645}
   Mountain: {fileID: 65426498318774704, guid: 735d3ba2a86c0db46840c0e42d16c7d8, type: 3}
   Clouds: {fileID: 4550036755843894858, guid: da72473c9971c0643b58ee23522825b3, type: 3}
-  MountainsToGen: 7
-  CloudsToGen: 12
-  DelTime: 20
+  MountainsToGen: 5
+  CloudsToGen: 10
+  DelTime: 7.5
   deleted: 0
   SpawnOBJ: {fileID: 3138372401147393829}
   detected: 0
@@ -237,8 +239,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8549698651153435922}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 111.0775, y: -3.68, z: 0}
-  m_LocalScale: {x: 176.00046, y: 1, z: 1}
+  m_LocalPosition: {x: 57.3628, y: -3.68, z: 0}
+  m_LocalScale: {x: 68.57374, y: 1, z: 1}
   m_Children:
   - {fileID: 6210407634172096498}
   m_Father: {fileID: 0}

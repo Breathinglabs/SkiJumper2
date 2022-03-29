@@ -5,6 +5,7 @@ using UnityEngine;
 public class Background_script : MonoBehaviour
 {
     public GameObject Player;
+    public Rigidbody2D Rigi;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +15,7 @@ public class Background_script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-   
-       // transform.Translate(new Vector2 (Player.transform.position.x*0.25f, 0)*Time.deltaTime, Space.World)*Time.deltaTime, S;
+
+        Rigi.velocity = new Vector2(CharacterController.PlayerVel, 0);
     }
 }

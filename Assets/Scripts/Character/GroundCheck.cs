@@ -8,6 +8,7 @@ public class GroundCheck : MonoBehaviour
     public bool AddTime;
     public float AngelLives;
     public ParticleSystem SnowParticles;
+    public static bool ImOnTheGround;
     // Start is called before the first frame update
     void Start()
     {
@@ -34,12 +35,15 @@ public class GroundCheck : MonoBehaviour
 
         }
     }
+
     void OnTriggerStay2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Floor"))
         {
+            ImOnTheGround = true;
            AddTime = true;
            OnTheGroundTimer = 0;
+            CharacterController.ImFallingDown = false;
             SnowParticles.Play();
         }
         
@@ -48,8 +52,15 @@ public class GroundCheck : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Floor"))
         {
+            StartCoroutine(LockJump());
             SnowParticles.Stop();
             AddTime = false;
         }
+    }
+    IEnumerator LockJump()
+    {
+        yield return new WaitForSeconds(CharacterController.BlowTimer);
+        ImOnTheGround = false;
+
     }
 }
