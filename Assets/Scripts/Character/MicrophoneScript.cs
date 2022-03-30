@@ -24,6 +24,8 @@ public class MicrophoneScript : MonoBehaviour
     public static bool IsBlowing;
     public float Sum;
     public float Avrg;
+
+    public bool BlowChecK;
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +62,24 @@ public class MicrophoneScript : MonoBehaviour
         audioSource.Play();
         Sum = 0;
 
+
+
+#if UNITY_EDITOR
+        if (Input.GetButtonDown("Jump"))
+        {
+            IsBlowing = true;
+            BlowChecK = true;
+            Debug.Log("KeyBoard_Blow");
+        }
+        if (Input.GetButtonUp("Jump"))
+        {
+            IsBlowing = false;
+            BlowChecK = false;
+            Debug.Log("Released_KeyBoard_Blow");
+
+        }
+#endif
+
     }
 
 
@@ -94,17 +114,19 @@ public class MicrophoneScript : MonoBehaviour
             if (waveAbs < levelMin)
             {
                  levelMin = waveAbs;
+         
             }
         }
         Thresh = (levelMax - levelMin) / 2 + levelMin;
         if (Avrg > Thresh && IsBlowing== false)
         {
-            Debug.Log("YES");
+            BlowChecK = true;
             IsBlowing = true;
+            
         }
         if (Avrg < Thresh && IsBlowing == true)
         {
-            Debug.Log("NO");
+            BlowChecK = false;
             IsBlowing = false;
         }
 

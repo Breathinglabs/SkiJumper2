@@ -9,10 +9,12 @@ public class GroundCheck : MonoBehaviour
     public float AngelLives;
     public ParticleSystem SnowParticles;
     public static bool ImOnTheGround;
+    public bool ExitedGround;
     // Start is called before the first frame update
     void Start()
     {
         SnowParticles.Stop();
+        ExitedGround = false;
     }
 
     // Update is called once per frame
@@ -34,6 +36,12 @@ public class GroundCheck : MonoBehaviour
             }
 
         }
+        if (ExitedGround)
+        {
+           
+            StartCoroutine(LockJump());
+            ExitedGround = false;
+        }
     }
 
     void OnTriggerStay2D(Collider2D col)
@@ -52,7 +60,7 @@ public class GroundCheck : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Floor"))
         {
-            StartCoroutine(LockJump());
+            ExitedGround = true;
             SnowParticles.Stop();
             AddTime = false;
         }
