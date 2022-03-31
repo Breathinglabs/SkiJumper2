@@ -67,7 +67,7 @@ public class GroundCheck : MonoBehaviour
     }
     IEnumerator LockJump()
     {
-        yield return new WaitForSeconds(CharacterController.BlowTimer);
+        yield return new WaitForSecondsRealtime(CharacterController.BlowTimer);
         ImOnTheGround = false;
 
     }

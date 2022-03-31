@@ -18,7 +18,7 @@ public class MicrophoneScript : MonoBehaviour
     public int SWin64 = 64;
 
     public float AudioSignalMultiplier;
-    public float levelMax = 0;
+    public float levelMax = 0.25f;
     public float levelMin = 1;
     public float Thresh = 0.5f;
     public static bool IsBlowing;
@@ -53,8 +53,6 @@ public class MicrophoneScript : MonoBehaviour
             audioSource.outputAudioMixerGroup = MixerGroupMaster;
             audioSource.clip = audioClip;
         }
-        IsBlowing = false;
-
     }
     private void Update()
     {
@@ -92,8 +90,9 @@ public class MicrophoneScript : MonoBehaviour
 
         // This get's the Max and Min level of the sample.
         levelMax = levelMax - 0.0015f*Time.deltaTime;
-        levelMin = levelMin + 0.00015f*Time.deltaTime;
- 
+        levelMin = levelMin + 0.000015f*Time.deltaTime;
+        //Debug.Log("The Level Min is" + levelMax);
+
 
         for (int i = 0; i < SWin700; i++)
         {
@@ -104,7 +103,7 @@ public class MicrophoneScript : MonoBehaviour
             // Average
                 Sum += waveAbs;
             //Debug.Log(Sum);
-                Avrg = (Sum / SWin700)*10;
+            Avrg = (Sum / SWin700) * 100000;
           //  Debug.Log(Avrg);
            
             if (waveAbs > levelMax)
@@ -118,18 +117,21 @@ public class MicrophoneScript : MonoBehaviour
             }
         }
         Thresh = (levelMax - levelMin) / 2 + levelMin;
-        if (Avrg > Thresh && IsBlowing== false)
+        if (levelMax > Thresh+0.1f && IsBlowing == false)
         {
             BlowChecK = true;
             IsBlowing = true;
             
         }
-        if (Avrg < Thresh && IsBlowing == true)
+        if (levelMax < Thresh + 0.1f && IsBlowing )
         {
             BlowChecK = false;
             IsBlowing = false;
         }
+        float trueavg = Avrg;
+        float trueTresh = Thresh;
 
+        Debug.Log(trueTresh);
         
     }
     /*

@@ -33,7 +33,10 @@ public class CharacterController : MonoBehaviour
         ImFallingDown = false;
         IReachedTheSky = false;
         FallAfterReachingSky = false;
-        
+
+        //Initial Jump
+        PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, 700));
+
     }
 
     // Update is called once per frame
@@ -87,10 +90,13 @@ public class CharacterController : MonoBehaviour
         if (MicrophoneScript.IsBlowing)
         {
             BlowTimer += Time.deltaTime;
+            PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, JumpQuant));
+            /*
             if (GroundCheck.ImOnTheGround)
             {
                 PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, JumpQuant));
             }
+            */
         }
     }
 
