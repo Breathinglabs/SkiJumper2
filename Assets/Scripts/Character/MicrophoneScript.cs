@@ -21,9 +21,9 @@ public class MicrophoneScript : MonoBehaviour
     public float levelMin = 1;
     public float Thresh = 0.5f;
     public static bool IsBlowing;
-    public float Sum;
     public float[] ABSArray = new float[700];
     public float[] DataArray = new float[700];
+    //public float[] AVRArray = new float[200];
     public float waveAbs;
    public float lastAbs;
     public float avrg;
@@ -62,10 +62,8 @@ public class MicrophoneScript : MonoBehaviour
     }
     private void Update()
     {
-        SizeBig();
-        audioSource.Play();
-        Sum = 0;
-       // lastAbs = Mathf.Abs(waveAbs);
+        SizeBig(); //all our code: min, max, thr detection and avg comparison to thr which giver zou boolean 1 or 0
+        audioSource.Play(); //make the microphone work, this runs on everz frame because otherwise mic would stop working on each new update 
 
 
 
