@@ -14,7 +14,6 @@ public class MicrophoneScript : MonoBehaviour
     public int ChangeMicro;
     public string SelDevice;
     public AudioMixerGroup MixerGroupMicro, MixerGroupMaster;
-    public int SWin700 = 700;
     public int SWin64 = 64;
 
     public float AudioSignalMultiplier;
@@ -23,9 +22,16 @@ public class MicrophoneScript : MonoBehaviour
     public float Thresh = 0.5f;
     public static bool IsBlowing;
     public float Sum;
-    public float Avrg;
+    public float[] ABSArray = new float[700];
+    public float[] DataArray = new float[700];
+    public float waveAbs;
+   public float lastAbs;
+    public float avrg;
+
 
     public bool BlowChecK;
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,76 +65,75 @@ public class MicrophoneScript : MonoBehaviour
         SizeBig();
         audioSource.Play();
         Sum = 0;
+       // lastAbs = Mathf.Abs(waveAbs);
 
 
 
 #if UNITY_EDITOR
         if (Input.GetButtonDown("Jump"))
-        {
-            IsBlowing = true;
-            BlowChecK = true;
-            Debug.Log("KeyBoard_Blow");
-        }
-        if (Input.GetButtonUp("Jump"))
-        {
-            IsBlowing = false;
-            BlowChecK = false;
-            Debug.Log("Released_KeyBoard_Blow");
+                            {
+                                IsBlowing = true;
+                                BlowChecK = true;
+                                Debug.Log("KeyBoard_Blow");
+                            }
+                            if (Input.GetButtonUp("Jump"))
+                            {
+                                IsBlowing = false;
+                                BlowChecK = false;
+                                Debug.Log("Released_KeyBoard_Blow");
 
-        }
-#endif
+                            }
+                    #endif
 
     }
 
 
     public void SizeBig()
     {
+        int micPosition = Microphone.GetPosition(null) - (700 + 1); // null means the first microphone
+        audioClip.GetData(DataArray, micPosition); //Take the microphone signal from the audio source
 
-        float[] BigWindow = new float[SWin700];
-        int micPosition = Microphone.GetPosition(null) - (SWin700 + 1); // null means the first microphone
-        audioClip.GetData(BigWindow, micPosition);
-
-        // This get's the Max and Min level of the sample.
-        levelMax = levelMax - 0.0015f*Time.deltaTime;
-        levelMin = levelMin + 0.000015f*Time.deltaTime;
+        // here we are decreasing max through time and increasing min in time
+        levelMax = levelMax - 0.15f*Time.deltaTime;
+        levelMin = levelMin + 0.015f*Time.deltaTime;
         //Debug.Log("The Level Min is" + levelMax);
 
 
-        for (int i = 0; i < SWin700; i++)
+        for (int i = 0; i < 699; i++)
         {
-         
-            // Absolute
-               float waveAbs = Mathf.Abs(BigWindow[i]);
-             
-            // Average
-                Sum += waveAbs;
-            //Debug.Log(Sum);
-            Avrg = (Sum / SWin700) * 100000;
-          //  Debug.Log(Avrg);
-           
-            if (waveAbs > levelMax)
+            ABSArray[i] = 100 * Mathf.Abs(DataArray[i]);
+
+            if (ABSArray[i] > levelMax)
             {
-                levelMax = waveAbs;
+                levelMax = ABSArray[i];
             }
-            if (waveAbs < levelMin)
+            if (ABSArray[i] < levelMin)
             {
-                 levelMin = waveAbs;
-         
+                levelMin = ABSArray[i];
+
             }
         }
-        Thresh = (levelMax - levelMin) / 2 + levelMin;
-        if (levelMax > Thresh+0.1f && IsBlowing == false)
+        for (int i=0; i<15; i++)
+        {
+            avrg += ABSArray[699-i];
+        }
+
+
+        ///////////////
+        avrg = avrg / 16;
+        Thresh = (levelMax - levelMin) / 1000 + levelMin;
+        if (avrg > Thresh+0.1f && IsBlowing == false)
         {
             BlowChecK = true;
             IsBlowing = true;
             
         }
-        if (levelMax < Thresh + 0.1f && IsBlowing )
+        if (avrg < Thresh + 0.01f && IsBlowing )
         {
             BlowChecK = false;
             IsBlowing = false;
         }
-        float trueavg = Avrg;
+
         float trueTresh = Thresh;
 
         Debug.Log(trueTresh);
