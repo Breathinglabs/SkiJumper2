@@ -1,3 +1,5 @@
+/* TODO: add speech detection in larger window and if true -> blow=1 && mute detetction for0.5 seconds*/
+
 using System.Collections;
 using System;
 using System.Linq;
