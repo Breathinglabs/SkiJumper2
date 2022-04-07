@@ -28,7 +28,7 @@ public class CheckerScript : MonoBehaviour
         DelTime = 7.5f;
         THISPlatform = transform.parent.gameObject;
 
-
+        /*
 
         if (Player.transform.position.y <= 25 && MountainsGenerated < MountainsToGen*2)
         {
