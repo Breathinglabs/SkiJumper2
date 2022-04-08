@@ -47,5 +47,5 @@ Material:
     - Boolean_b072901c69274da0a6a68adf907f7b51: 0
     - _AngelPower: 0
     m_Colors:
-    - Color_bc95485c656d436dab305ebaebd33049: {r: 0, g: 0.15606594, b: 0.32075477, a: 0}
+    - Color_bc95485c656d436dab305ebaebd33049: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

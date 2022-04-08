@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GroundCheck : MonoBehaviour
 {
@@ -10,49 +11,39 @@ public class GroundCheck : MonoBehaviour
     public ParticleSystem SnowParticles;
     public static bool ImOnTheGround;
     public bool ExitedGround;
+    public Transform AngelSpawnerPos;
+    public GameObject Angel_GMOBJ;
+    public bool ImOnTheGrounCorrection;
     // Start is called before the first frame update
     void Start()
     {
         SnowParticles.Stop();
         ExitedGround = false;
+        AngelLives = 0;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (AddTime)
-        {
-            OnTheGroundTimer = Time.time;
-        }
-        if (OnTheGroundTimer >= 10f)
-        {
-            if (AngelLives <= 3)
-            {
-                //Spawn Angel
-            }
-            else
-            {
-                //GameOver
-            }
-
-        }
-        if (ExitedGround)
-        {
-           
-            StartCoroutine(LockJump());
-            ExitedGround = false;
-        }
-    }
-
     void OnTriggerStay2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Floor"))
         {
-            ImOnTheGround = true;
-           AddTime = true;
-           OnTheGroundTimer = 0;
-            CharacterController.ImFallingDown = false;
+            ImOnTheGrounCorrection = false;
             SnowParticles.Play();
+            ImOnTheGround = true;
+            OnTheGroundTimer += Time.deltaTime;
+                if (OnTheGroundTimer >= 15f)
+                {
+                    if (AngelLives <= 3 && AngelScrirpr.AngelQuantInScene<1)
+                    {
+                        Instantiate(Angel_GMOBJ, AngelSpawnerPos.position, AngelSpawnerPos.rotation);
+                        OnTheGroundTimer = 0;
+                        AngelLives += 1;
+                    }
+                    if (AngelLives >=4)
+                    {
+                        SceneManager.LoadScene("Game_End");
+                        Debug.Log("You Loose :'(");
+                    }
+                }
+            CharacterController.ImFallingDown = false;
         }
         
     }
@@ -60,10 +51,24 @@ public class GroundCheck : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Floor"))
         {
+            if (ImOnTheGrounCorrection == false)
+            {
+                StartCoroutine(GroundTimerResetCorrection());
+            }
+            if (ImOnTheGrounCorrection == true)
+            {
+                OnTheGroundTimer = 0;
+            }
             ExitedGround = true;
             SnowParticles.Stop();
             AddTime = false;
         }
+    }
+    IEnumerator GroundTimerResetCorrection()
+    {
+        yield return new WaitForSeconds(0.15f);
+       ImOnTheGrounCorrection = true;
+
     }
     IEnumerator LockJump()
     {

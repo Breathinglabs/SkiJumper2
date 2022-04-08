@@ -115,11 +115,11 @@ public class CharacterController : MonoBehaviour
     }
     IEnumerator AngelAnim()
     {
-        PlayerVel = 0f;
+        PlayerVel = 0.25f;
         JumpQuant = 0f;
         AngelBehindYou.SetActive(true);
         yield return new WaitForSeconds(0.5f);
-        PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, 500));
+        PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, 650));
         yield return new WaitForSeconds(0.25f);
         PlayerVel = Ini_PlayerVel;
         JumpQuant = Ini_JumpQuant;

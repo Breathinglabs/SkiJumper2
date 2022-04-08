@@ -1258,7 +1258,7 @@ MonoBehaviour:
   Clouds: {fileID: 4550036755843894858, guid: da72473c9971c0643b58ee23522825b3, type: 3}
   MountainsToGen: 5
   CloudsToGen: 10
-  DelTime: 10
+  DelTime: 8
   deleted: 0
   SpawnOBJ: {fileID: 7451944955872738739}
   detected: 0
