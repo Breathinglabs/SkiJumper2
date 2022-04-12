@@ -47,6 +47,7 @@ public class MicrophoneScript : MonoBehaviour
             if (Microphone.devices.Length > 0)
             {
                 SelDevice = Microphone.devices[ChangeMicro].ToString();
+                MicroUsing_UI.CurrentMicro_S = SelDevice;
                 audioSource.outputAudioMixerGroup = MixerGroupMicro;
                 audioSource.clip = Microphone.Start(SelDevice, true, 20, AudioSettings.outputSampleRate);
                 audioClip = audioSource.clip;
@@ -66,6 +67,8 @@ public class MicrophoneScript : MonoBehaviour
     {
         SizeBig(); //all our code: min, max, thr detection and avg comparison to thr which giver zou boolean 1 or 0
         audioSource.Play(); //make the microphone work, this runs on everz frame because otherwise mic would stop working on each new update 
+        LevelMin_UI.LevelMinUI_F = levelMin;
+        LevelMax_UI.LevelMaxUI_F = levelMax;
 
 
 
@@ -134,9 +137,11 @@ public class MicrophoneScript : MonoBehaviour
             IsBlowing = false;
         }
 
-        float trueTresh = Thresh;
+        //float trueTresh = Thresh;
+        Threshold_UI.ThresoldUI_F = Thresh;
+        Average_UI.AvrgUI_F = avrg;
 
-        Debug.Log(trueTresh);
+        //Debug.Log(trueTresh);
         
     }
     /*
