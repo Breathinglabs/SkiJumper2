@@ -1268,7 +1268,7 @@ MonoBehaviour:
   audioClip: {fileID: 0}
   audioSource: {fileID: 1354910656}
   useMicro: 1
-  ChangeMicro: 1
+  ChangeMicro: 0
   SelDevice: 0
   MixerGroupMicro: {fileID: 319208358021351191, guid: d7bc2aec91e632743b252444ae027255, type: 2}
   MixerGroupMaster: {fileID: 24300002, guid: d7bc2aec91e632743b252444ae027255, type: 2}
