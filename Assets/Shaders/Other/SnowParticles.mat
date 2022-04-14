@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SnowParticles
+  m_Shader: {fileID: -6465566751694194690, guid: d26807c76305afd44addecd4961f23ab, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_2bae0d74c1674205a9c9ea8f3c2719aa:
+        m_Texture: {fileID: 2800000, guid: 456ca82c1af0ce74eb16895a556b3a71, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_512b74883970440a802b89f92feaecac: -0.61
+    - Vector1_996649950c43433a8f9121ecabba4c95: 1.17
+    - Vector1_bcdff58734b84a1a97a63098c887fa3b: 3
+    m_Colors:
+    - Color_009a6e102f6e4b46afb60f6afcc8f082: {r: 3.827451, g: 11.984314, b: 11.858824, a: 0}
+  m_BuildTextureStacks: []
