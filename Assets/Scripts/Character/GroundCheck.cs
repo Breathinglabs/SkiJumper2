@@ -8,7 +8,7 @@ public class GroundCheck : MonoBehaviour
     public float OnTheGroundTimer;
     public bool AddTime;
     public float AngelLives;
-    public ParticleSystem SnowParticles;
+   // public ParticleSystem SnowParticles;
     public GameObject SnowPartShader;
     public static bool ImOnTheGround;
     public bool ExitedGround;
@@ -19,7 +19,7 @@ public class GroundCheck : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SnowParticles.Stop();
+       // SnowParticles.Stop();
         SnowPartShader.SetActive(false);
         ExitedGround = false;
         AngelLives = 0;
@@ -29,9 +29,11 @@ public class GroundCheck : MonoBehaviour
         if (col.gameObject.CompareTag("Floor"))
         {
             ImOnTheGrounCorrection = false;
-            SnowParticles.Play();
+          //  SnowParticles.Play();
             SnowPartShader.SetActive(true);
-            MyAnim.SetBool("OnTheGround", true);
+            //MyAnim.SetBool("OnTheGround", true);
+            MyAnim.SetBool("OnTheAir", false);
+
             ImOnTheGround = true;
             OnTheGroundTimer += Time.deltaTime;
                 if (OnTheGroundTimer >= 15f)
@@ -56,8 +58,10 @@ public class GroundCheck : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Floor"))
         {
+            MyAnim.SetBool("OnTheAir", true);
             SnowPartShader.SetActive(false);
-            MyAnim.SetBool("OnTheGround", false);
+            //  MyAnim.SetBool("OnTheGround", false);
+
             if (ImOnTheGrounCorrection == false)
             {
                 StartCoroutine(GroundTimerResetCorrection());
@@ -67,7 +71,7 @@ public class GroundCheck : MonoBehaviour
                 OnTheGroundTimer = 0;
             }
             ExitedGround = true;
-            SnowParticles.Stop();
+           // SnowParticles.Stop();
             AddTime = false;
         }
     }
