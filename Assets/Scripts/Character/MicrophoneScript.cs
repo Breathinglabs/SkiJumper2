@@ -12,12 +12,13 @@ public class MicrophoneScript : MonoBehaviour
 {
     public AudioClip audioClip;
     public AudioSource audioSource;
-    public bool useMicro;
+    public bool Conected;
     public int ChangeMicro;
+    public int SelCheckMicro;
     public string SelDevice;
+    public string LastSelDevice;
     public AudioMixerGroup MixerGroupMicro, MixerGroupMaster;
     public int SWin64 = 64;
-
     public float AudioSignalMultiplier;
     public float levelMax = 0.25f;
     public float levelMin = 1;
@@ -29,6 +30,10 @@ public class MicrophoneScript : MonoBehaviour
     public float waveAbs;
    public float lastAbs;
     public float avrg;
+    public float Variance;
+
+    public bool Limit1, Limit2, Limit3;
+    public int LastMicro;
 
 
     public bool BlowChecK;
@@ -38,37 +43,45 @@ public class MicrophoneScript : MonoBehaviour
     void Start()
     {
         IsBlowing = false;
-       
-        if (useMicro)
-        {
-            /* if the Microphone list it's bigger than 0 (no Microphones), select one, the AudioJack is mostly readed as 0, but try
-                with diferent numbers!!
-            */
-            if (Microphone.devices.Length > 0)
-            {
-                SelDevice = Microphone.devices[ChangeMicro].ToString();
-                MicroUsing_UI.CurrentMicro_S = SelDevice;
-                audioSource.outputAudioMixerGroup = MixerGroupMicro;
-                audioSource.clip = Microphone.Start(SelDevice, true, 20, AudioSettings.outputSampleRate);
-                audioClip = audioSource.clip;
-            }
-            else
-            {
-                useMicro = false;
-            }
-        }
-        if (!useMicro)
-        {
-            audioSource.outputAudioMixerGroup = MixerGroupMaster;
-            audioSource.clip = audioClip;
-        }
+        SelCheckMicro = ChangeMicro;
+        //ini_ChangeMicro = ChangeMicro;
+        Limit1 = false;
+        Limit2 = false;
+        /*
+         if (Conected)
+         {
+             /* if the Microphone list it's bigger than 0 (no Microphones), select one, the AudioJack is mostly readed as 0, but try
+                 with diferent numbers!!
+
+             if (Microphone.devices.Length > 0)
+             {
+                 SelDevice = Microphone.devices[ChangeMicro].ToString();
+                 MicroUsing_UI.CurrentMicro_S = SelDevice;
+                 audioSource.outputAudioMixerGroup = MixerGroupMicro;
+                 audioSource.clip = Microphone.Start(SelDevice, true, 20, AudioSettings.outputSampleRate);
+                 audioClip = audioSource.clip;
+             }
+             else
+             {
+                 Conected = false;
+             }
+         }
+         if (!Conected)
+         {
+             audioSource.outputAudioMixerGroup = MixerGroupMaster;
+             audioSource.clip = audioClip;
+         }
+         */
     }
+
     private void Update()
     {
+        UseMicro();
         SizeBig(); //all our code: min, max, thr detection and avg comparison to thr which giver zou boolean 1 or 0
         audioSource.Play(); //make the microphone work, this runs on everz frame because otherwise mic would stop working on each new update 
         LevelMin_UI.LevelMinUI_F = levelMin;
         LevelMax_UI.LevelMaxUI_F = levelMax;
+     //   Variance = 0; 
 
 
 
@@ -101,11 +114,13 @@ public class MicrophoneScript : MonoBehaviour
         levelMin = levelMin + 0.015f*Time.deltaTime;
         //Debug.Log("The Level Min is" + levelMax);
 
-
+        Variance = 0;
         for (int i = 0; i < 699; i++)
         {
-            ABSArray[i] = 100 * Mathf.Abs(DataArray[i]);
+           ABSArray[i] = 100 * Mathf.Abs(DataArray[i]);
+           Variance = Math.Abs(ABSArray[i] - ABSArray[i + 1]);
 
+            
             if (ABSArray[i] > levelMax)
             {
                 levelMax = ABSArray[i];
@@ -116,22 +131,22 @@ public class MicrophoneScript : MonoBehaviour
 
             }
         }
-        for (int i=0; i<15; i++)
+        for (int i=0; i<255; i++)
         {
             avrg += ABSArray[699-i];
         }
 
 
         ///////////////
-        avrg = avrg / 16;
+        avrg = avrg / 256;
         Thresh = (levelMax - levelMin) / 1000 + levelMin;
-        if (avrg > Thresh+0.1f && IsBlowing == false)
+        if (avrg > Thresh+0.5f /*&& IsBlowing == false && Variance<=3f*/)
         {
             BlowChecK = true;
             IsBlowing = true;
             
         }
-        if (avrg < Thresh + 0.01f && IsBlowing )
+        if (avrg < Thresh + 0.01f /*&& IsBlowing*/)
         {
             BlowChecK = false;
             IsBlowing = false;
@@ -140,9 +155,52 @@ public class MicrophoneScript : MonoBehaviour
         //float trueTresh = Thresh;
         Threshold_UI.ThresoldUI_F = Thresh;
         Average_UI.AvrgUI_F = avrg;
+        Variance_UI.VarianceUI_F = Variance;
 
         //Debug.Log(trueTresh);
         
+    }
+
+    public void UseMicro()
+    {
+        MicroUsing_UI.CurrentMicro_S = SelDevice;
+        LastMicro_UI.LastMicro_S = LastSelDevice;
+        if (Conected)
+        {
+            if (SelCheckMicro != ChangeMicro && Limit1 == true && Limit2 == true)
+            {
+                Limit1 = false;
+                Limit2 = false;
+            }
+            if (Microphone.devices.Length >= 0)
+            {
+
+                SelDevice = Microphone.devices[ChangeMicro].ToString();
+                LastSelDevice = Microphone.devices[LastMicro].ToString();
+                audioSource.outputAudioMixerGroup = MixerGroupMicro;
+                if (Limit1 == false)
+                { 
+                    // Start getting micro signal
+                    audioSource.clip = Microphone.Start(SelDevice, true, 20, AudioSettings.outputSampleRate);
+                    audioClip = audioSource.clip;
+                    Limit1 = true;
+                }
+                if (SelCheckMicro != ChangeMicro && Limit2 == false)
+                {
+                    StartCoroutine(TakeLastMicro());
+                    Limit2 = true;
+                }
+            }
+            else
+            {
+                Conected = false;
+            }
+        }
+        if (!Conected)
+        {
+            audioSource.outputAudioMixerGroup = MixerGroupMaster;
+            audioSource.clip = audioClip;
+        }
     }
     /*
     float SizeSmall()
@@ -187,6 +245,17 @@ public class MicrophoneScript : MonoBehaviour
     }
     */
 
+      IEnumerator TakeLastMicro()
+    {
+        yield return new WaitForSeconds(0.01f);
+        LastMicro = SelCheckMicro;
+
+        yield return new WaitForSeconds(0.025f);
+        SelCheckMicro = ChangeMicro;
+
+    }
+
 }
-  
+
+
 
