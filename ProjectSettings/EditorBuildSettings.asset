@@ -8,13 +8,19 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: Assets/Scenes/Game.unity
-    guid: ae98637f8cc89414db57d0e3b9f35325
-  - enabled: 0
-    path: Assets/Scenes/Game_End.unity
-    guid: 8da4b415411072d4a96d5151b8cfdd59
+  - enabled: 1
+    path: Assets/Scenes/TittleScreen.unity
+    guid: a0b17de8453ed7b41a754f713a5b6994
   - enabled: 1
     path: Assets/Scenes/Variables.unity
     guid: eff3e1eef0e82ee48b14687dbfa4d9c5
+  - enabled: 1
+    path: Assets/Scenes/Game_Start.unity
+    guid: 8d781ab76ce7f8a44a0b6a026eee94be
+  - enabled: 1
+    path: Assets/Scenes/Game.unity
+    guid: ae98637f8cc89414db57d0e3b9f35325
+  - enabled: 1
+    path: Assets/Scenes/Game_End.unity
+    guid: 8da4b415411072d4a96d5151b8cfdd59
   m_configObjects: {}
