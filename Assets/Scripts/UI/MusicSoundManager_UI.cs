@@ -7,6 +7,7 @@ public class MusicSoundManager_UI : MonoBehaviour
 {
     public Slider VolumeSlider;
     public GameObject MuteIcon;
+    public static float Vol;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,7 +25,7 @@ public class MusicSoundManager_UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Vol = AudioListener.volume;
     }
 
     public void ChangeVolume()
