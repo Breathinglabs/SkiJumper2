@@ -14,13 +14,14 @@ public class CharacterController : MonoBehaviour
     private float Ini_PlayerVel, Ini_JumpQuant; //This varaiables are to store the value of the initial var.
     public GameObject AngelBehindYou;
     public static bool IReachedTheSky;
-    public float SkyLevel, BlowTimerCheck;
+    public float SkyLevel, BlowTimerCheck, lastBlowCheck;
     public bool IRTS_Check;
     public float Ypos;
     public static bool ImFallingDown;
     public bool ImFallingDown_Checker;
     private bool FallAfterReachingSky;
-    public static float BlowTimer; 
+    public static float BlowTimer;
+    public float MaxBlowTimer; 
 
 
 
@@ -33,6 +34,8 @@ public class CharacterController : MonoBehaviour
         ImFallingDown = false;
         IReachedTheSky = false;
         FallAfterReachingSky = false;
+        Load();
+        MaxBlow_UI.MaxBlowTimer_F = MaxBlowTimer;
 
         //Initial Jump
         PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, 700));
@@ -43,6 +46,7 @@ public class CharacterController : MonoBehaviour
     void Update()
     {
         BlowTimerCheck = BlowTimer;
+      
         // Know if the pkayer is falling.
         ImFallingDown_Checker = ImFallingDown;
         if (Mathf.Abs(Ypos - transform.position.y) > 0.1F)
@@ -81,6 +85,8 @@ public class CharacterController : MonoBehaviour
        if (MicrophoneScript.IsBlowing == false)
         {
             BlowTimer = 0;
+            ActualBlowTimer_UI.BlowTimer_F = BlowTimer;
+
         }
 
     }
@@ -90,13 +96,15 @@ public class CharacterController : MonoBehaviour
         if (MicrophoneScript.IsBlowing)
         {
             BlowTimer += Time.deltaTime;
-            PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, JumpQuant));
-            /*
-            if (GroundCheck.ImOnTheGround)
+            ActualBlowTimer_UI.BlowTimer_F = BlowTimer;
+            if (BlowTimer > MaxBlowTimer)
             {
-                PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, JumpQuant));
+                MaxBlowTimer = BlowTimer;
+                MaxBlow_UI.MaxBlowTimer_F = MaxBlowTimer;
+                Save();
             }
-            */
+            PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, JumpQuant));
+           
         }
     }
 
@@ -125,7 +133,16 @@ public class CharacterController : MonoBehaviour
         JumpQuant = Ini_JumpQuant;
         AngelBehindYou.SetActive(false);
     }
-  
+
+    private void Load()
+    {
+        MaxBlowTimer = PlayerPrefs.GetFloat("MaxBlow");
+    }
+    private void Save()
+    {
+        PlayerPrefs.SetFloat("MaxBlow", MaxBlowTimer);
+    }
+
     /*
         Hi,
         If this message is for the new people someone that is encharged yo update the game or whatever, 
