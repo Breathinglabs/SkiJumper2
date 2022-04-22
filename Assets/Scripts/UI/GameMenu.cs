@@ -16,8 +16,8 @@ public class GameMenu : MonoBehaviour
         mute = false;
         AudioListener.volume = PlayerPrefs.GetFloat("musicVolume");
         lastvol = PlayerPrefs.GetFloat("musicVolume");
-        ListenerSound.SetActive(false);
-        ListenerMute.SetActive(true);
+        ListenerSound.SetActive(true);
+        ListenerMute.SetActive(false);
     }
 
     // Update is called once per frame
@@ -31,8 +31,8 @@ public class GameMenu : MonoBehaviour
         if (mute == false)
         {
             AudioListener.volume = 0;
-            ListenerMute.SetActive(false);
-            ListenerSound.SetActive(true);
+            ListenerMute.SetActive(true);
+            ListenerSound.SetActive(false);
             if (limit1 == false)
             {
                 StartCoroutine(Wait1());
@@ -45,14 +45,18 @@ public class GameMenu : MonoBehaviour
             AudioListener.volume = PlayerPrefs.GetFloat("musicVolume");
             mute = false;
             limit1 = false;
-            ListenerSound.SetActive(false);
-            ListenerMute.SetActive(true);
+            ListenerSound.SetActive(true);
+            ListenerMute.SetActive(false);
             
         }
     }
     public void BackToMenu()
     {
         SceneManager.LoadScene("TittleScreen");
+    }
+    public void BackToJump()
+    {
+        SceneManager.LoadScene("Game_Start");
     }
 
     IEnumerator Wait1()

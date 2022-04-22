@@ -21,7 +21,8 @@ public class CharacterController : MonoBehaviour
     public bool ImFallingDown_Checker;
     private bool FallAfterReachingSky;
     public static float BlowTimer;
-    public float MaxBlowTimer; 
+    public float MaxBlowTimer;
+    public float ActMaxBlow;
 
 
 
@@ -34,6 +35,7 @@ public class CharacterController : MonoBehaviour
         ImFallingDown = false;
         IReachedTheSky = false;
         FallAfterReachingSky = false;
+        ActMaxBlow = 0;
         Load();
         MaxBlow_UI.MaxBlowTimer_F = MaxBlowTimer;
 
@@ -97,6 +99,11 @@ public class CharacterController : MonoBehaviour
         {
             BlowTimer += Time.deltaTime;
             ActualBlowTimer_UI.BlowTimer_F = BlowTimer;
+            if (BlowTimer > ActMaxBlow)
+            {
+                ActMaxBlow = BlowTimer;
+                MaxActualBlowTimer_UI.MaxActBlowTimer_F = ActMaxBlow;
+            }
             if (BlowTimer > MaxBlowTimer)
             {
                 MaxBlowTimer = BlowTimer;
