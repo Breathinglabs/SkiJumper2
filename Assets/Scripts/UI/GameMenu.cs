@@ -13,11 +13,26 @@ public class GameMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mute = false;
-        AudioListener.volume = PlayerPrefs.GetFloat("musicVolume");
-        lastvol = PlayerPrefs.GetFloat("musicVolume");
-        ListenerSound.SetActive(true);
-        ListenerMute.SetActive(false);
+        if (!PlayerPrefs.HasKey("musicVolume"))
+        {
+            PlayerPrefs.SetFloat("musicVolume", 1);
+        }
+        else
+        {
+            AudioListener.volume = PlayerPrefs.GetFloat("musicVolume");
+        }
+        if (AudioListener.volume == 0)
+        {
+            mute = true;
+            ListenerSound.SetActive(false);
+            ListenerMute.SetActive(true);
+        }
+        else 
+        {
+            mute = false;
+            ListenerSound.SetActive(true);
+            ListenerMute.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -43,6 +58,11 @@ public class GameMenu : MonoBehaviour
         if (mute == true)
         {
             AudioListener.volume = PlayerPrefs.GetFloat("musicVolume");
+            if (AudioListener.volume ==0)
+            {
+                PlayerPrefs.SetFloat("musicVolume", 1f);
+                AudioListener.volume = PlayerPrefs.GetFloat("musicVolume");
+            }
             mute = false;
             limit1 = false;
             ListenerSound.SetActive(true);

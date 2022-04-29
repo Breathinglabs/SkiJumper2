@@ -11,6 +11,14 @@ public class MainMenu_UI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (!PlayerPrefs.HasKey("musicVolume"))
+        {
+            PlayerPrefs.SetFloat("musicVolume", 1);
+        }
+        else
+        {
+            AudioListener.volume = PlayerPrefs.GetFloat("musicVolume");
+        }
         BaseMenu.SetActive(true);
         OptionsMenu.SetActive(false);
         CreditsMenu.SetActive(false);
