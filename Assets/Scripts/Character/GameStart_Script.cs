@@ -9,6 +9,7 @@ public class GameStart_Script : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        CharaAnimator.SetBool("GameStart", true);
         StartCoroutine(StartGame());
     }
 
@@ -20,7 +21,7 @@ public class GameStart_Script : MonoBehaviour
 
     IEnumerator StartGame()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(4.075f);
         SceneManager.LoadScene("Game");
     }
 }

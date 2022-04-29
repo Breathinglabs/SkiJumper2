@@ -18,7 +18,8 @@ public class MaxBlow_UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MaxBlowTimer_S = MaxBlowTimer_F.ToString();
+        
+        MaxBlowTimer_S = MaxBlowTimer_F.ToString("F2");
         Text.text = MaxBlowTimer_S;
     }
 
