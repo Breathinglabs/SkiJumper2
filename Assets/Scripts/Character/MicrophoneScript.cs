@@ -77,30 +77,11 @@ public class MicrophoneScript : MonoBehaviour
     private void Update()
     {
         UseMicro();
-        SizeBig(); //all our code: min, max, thr detection and avg comparison to thr which giver zou boolean 1 or 0
+        SizeBig(); //all our code: min, max, thr detection and avg comparison to thr which giver you boolean 1 or 0
         audioSource.Play(); //make the microphone work, this runs on everz frame because otherwise mic would stop working on each new update 
         LevelMin_UI.LevelMinUI_F = levelMin;
         LevelMax_UI.LevelMaxUI_F = levelMax;
      //   Variance = 0; 
-
-
-
-#if UNITY_EDITOR
-        if (Input.GetButtonDown("Jump"))
-                            {
-                                IsBlowing = true;
-                                BlowChecK = true;
-                                Debug.Log("KeyBoard_Blow");
-                            }
-                            if (Input.GetButtonUp("Jump"))
-                            {
-                                IsBlowing = false;
-                                BlowChecK = false;
-                                Debug.Log("Released_KeyBoard_Blow");
-
-                            }
-                    #endif
-
     }
 
 
@@ -114,12 +95,15 @@ public class MicrophoneScript : MonoBehaviour
         levelMin = levelMin + 0.015f*Time.deltaTime;
         //Debug.Log("The Level Min is" + levelMax);
 
-        Variance = 0;
+        //Variance = 0;
+      
+        
         for (int i = 0; i < 699; i++)
         {
+            
            ABSArray[i] = 100 * Mathf.Abs(DataArray[i]);
-           Variance = Math.Abs(ABSArray[i] - ABSArray[i + 1]);
-
+       //   Variance = Math.Abs(ABSArray[i] - ABSArray[i + 1]);
+            
             
             if (ABSArray[i] > levelMax)
             {
@@ -131,16 +115,16 @@ public class MicrophoneScript : MonoBehaviour
 
             }
         }
+        
         for (int i=0; i<255; i++)
         {
             avrg += ABSArray[699-i];
         }
 
-
         ///////////////
         avrg = avrg / 256;
         Thresh = (levelMax - levelMin) / 1000 + levelMin;
-        if (avrg > Thresh+0.5f /*&& IsBlowing == false && Variance<=3f*/)
+        if (avrg > Thresh+0.9f /*&& IsBlowing == false && Variance<=3f*/)
         {
             BlowChecK = true;
             IsBlowing = true;
