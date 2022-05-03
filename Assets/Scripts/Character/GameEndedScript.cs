@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameEndedScript : MonoBehaviour
 {
     public Animator CharaAnimator;
-    public ParticleSystem SnowParticles;
+    //public ParticleSystem SnowParticles;
     public GameObject GameEndCanvas;
     private bool Limit;
     // Start is called before the first frame update
@@ -16,7 +16,7 @@ public class GameEndedScript : MonoBehaviour
         Limit = false;
         CharaAnimator.SetBool("GameEnded", true);
         GameEndCanvas.SetActive(false);
-        SnowParticles.Stop();
+      //  SnowParticles.Stop();
     }
 
     // Update is called once per frame
@@ -32,14 +32,14 @@ public class GameEndedScript : MonoBehaviour
         if (col.gameObject.CompareTag("Floor"))
         {
             Debug.Log("Nanashi Mumei Rules");
-            SnowParticles.Play();
+        //    SnowParticles.Play();
         }
 
     }
     IEnumerator DeactParticles()
     {
         yield return new WaitForSeconds(3f);
-        SnowParticles.Stop();
+        //SnowParticles.Stop();
         yield return new WaitForSeconds(2f);
         GameEndCanvas.SetActive(true);
 

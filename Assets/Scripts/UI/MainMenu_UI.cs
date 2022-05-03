@@ -8,9 +8,20 @@ public class MainMenu_UI : MonoBehaviour
     public GameObject BaseMenu;
     public GameObject OptionsMenu;
     public GameObject CreditsMenu;
+    public GameObject BeforeYouPlay;
+
+    public int BYP_DontShow;
     // Start is called before the first frame update
     void Start()
     {
+        if (!PlayerPrefs.HasKey("BeforeYouPlayAdvert"))
+        {
+            PlayerPrefs.SetInt("BeforeYouPlayAdvert", 0);
+        }
+        else
+        {
+            loadData();
+        }
         if (!PlayerPrefs.HasKey("musicVolume"))
         {
             PlayerPrefs.SetFloat("musicVolume", 1);
@@ -19,9 +30,20 @@ public class MainMenu_UI : MonoBehaviour
         {
             AudioListener.volume = PlayerPrefs.GetFloat("musicVolume");
         }
-        BaseMenu.SetActive(true);
-        OptionsMenu.SetActive(false);
-        CreditsMenu.SetActive(false);
+        if (BYP_DontShow == 0)
+        {
+            BeforeYouPlay.SetActive(true);
+            BaseMenu.SetActive(false);
+            OptionsMenu.SetActive(false);
+            CreditsMenu.SetActive(false);
+        }
+        if (BYP_DontShow == 1)
+        {
+            BeforeYouPlay.SetActive(false);
+            BaseMenu.SetActive(true);
+            OptionsMenu.SetActive(false);
+            CreditsMenu.SetActive(false);
+        }
     }
 
     // Update is called once per frame
@@ -52,9 +74,38 @@ public class MainMenu_UI : MonoBehaviour
         CreditsMenu.SetActive(false);
 
     }
+    public void CloseBYP()
+    {
+        BeforeYouPlay.SetActive(false);
+        BaseMenu.SetActive(true);
+        OptionsMenu.SetActive(false);
+        CreditsMenu.SetActive(false);
+        BYP_DontShow = 0;
+        saveData();
+    }
+
+    public void DontShowBYP()
+    {
+        BeforeYouPlay.SetActive(false);
+        BaseMenu.SetActive(true);
+        OptionsMenu.SetActive(false);
+        CreditsMenu.SetActive(false);
+        BYP_DontShow = 1;
+        saveData();
+    }
 
     public void ToDebugWindow()
     {
         SceneManager.LoadScene("Variables");
+    }
+    void saveData()
+    {
+        PlayerPrefs.SetInt("BeforeYouPlayAdvert", BYP_DontShow);
+       
+    }
+
+    void loadData()
+    {
+        BYP_DontShow = PlayerPrefs.GetInt("BeforeYouPlayAdvert");
     }
 }
