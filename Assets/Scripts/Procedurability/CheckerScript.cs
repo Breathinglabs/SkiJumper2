@@ -9,13 +9,15 @@ public class CheckerScript : MonoBehaviour
     public GameObject THISPlatform;
     public GameObject NextPlatformPrefab1, NextPlatformPrefab2, NextPlatformPrefab3;
     public Transform AssetGen;
-    public GameObject Mountain, Clouds;
+    public GameObject Mountain, Clouds, Bird1, Bird2, Plane, ToyPlane, UFO;
     public int MountainsToGen, CloudsToGen;
+    private int Bird1ToGen = 1, Bird2ToGen = 1, PlaneToGen = 1, PlaneToyToGen = 1, UFOToGen = 1;
     public float DelTime;
     public bool deleted;
     public GameObject SpawnOBJ;
     public bool detected;
     public bool instantiated;
+    public int GenBird1, GenBird2, GenPlane, GenToyPlane, GenUFO;
 
 
     public int MountainsGenerated, CloudsGenerated;
@@ -63,81 +65,88 @@ public class CheckerScript : MonoBehaviour
         }
         */
 
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (detected == true)
+    // Assets to gen
+        // Sky Level 1
+        if (Player.transform.position.y <= 25)
         {
-            Debug.Log("Ola");
-
-        }
-    }
-
-    private void FixedUpdate()
-    {
-       // Vector3 upDir = new Vector2(transform.position.x, 1);
-       /*
-        RaycastHit2D hit = Physics2D.Raycast(SpawnOBJ.transform.position, transform.up*Mathf.Infinity);
-        Debug.DrawRay(SpawnOBJ.transform.position, transform.up*Mathf.Infinity, Color.green);
-        if (hit.collider.name == "GroundCheck")
-        {
-            Debug.Log("Target name: " + hit.collider.name);
-            if (instantiated == false)
+            GenToyPlane = Random.Range(0, 5);
+            if (GenToyPlane == 3)
             {
-                Instantiate(NEXTPlatformPrefab, EndPos.transform.position, EndPos.transform.rotation);
-                instantiated = true;
+                var NewToyPlane = Instantiate(Bird1, AssetGen.parent.position, AssetGen.rotation);
+                NewToyPlane.transform.parent = gameObject.transform;
             }
-            StartCoroutine(DelPlatform());
         }
-
-        //Debug DrawRay( , Vector2 upDir, Color color = color.white);
-
-
-
-        if (hit.collider != null)
+        if (Player.transform.position.y <= 45)
         {
-
+            GenBird1 = Random.Range(0, 2);
+            if (GenBird1 == 1)
+            {
+                var NewBird1 = Instantiate(ToyPlane, AssetGen.parent.position, AssetGen.rotation);
+                NewBird1.transform.parent = gameObject.transform;
+            }
         }
-       */
+        // Sky Level 2
+        if (Player.transform.position.y <= 75)
+        {
+            GenPlane = Random.Range(0, 5);
+            if (GenPlane <= 2)
+            {
+                var NewPlane = Instantiate(Plane, AssetGen.parent.position, AssetGen.rotation);
+                NewPlane.transform.parent = gameObject.transform;
+            }
+        }
+        if (Player.transform.position.y <= 100)
+        {
+            GenBird2 = Random.Range(0, 4);
+            if (GenBird2 >= 2)
+            {
+                var NewBird2 = Instantiate(Bird2, AssetGen.parent.position, AssetGen.rotation);
+                NewBird2.transform.parent = gameObject.transform;
+            }
+        }
+        // Sky Level 3
+        if (Player.transform.position.y <= 100)
+        {
+            GenUFO = Random.Range(0, 10);
+            if (GenUFO <= 4)
+            {
+                var NewUFO = Instantiate(UFO, AssetGen.parent.position, AssetGen.rotation);
+                NewUFO.transform.parent = gameObject.transform;
+            }
+        }
+
     }
 
-      
-    
-     void OnTriggerEnter2D(Collider2D col)
-    {
-       
-      if (col.gameObject.CompareTag("Player"))
+
+        void OnTriggerEnter2D(Collider2D col)
         {
-            // 50 is the diference space between the EndPos position and the new platform pivot (which usually is on the center of the gameobject)
-            Vector3 NewPlatPos = new Vector3(EndPos.transform.position.x + 5f, EndPos.position.y, EndPos.position.z);
-            Instantiate(NextPlatformPrefab1, NewPlatPos, EndPos.transform.rotation);
-            instantiated = true;
-            StartCoroutine(DelPlatform());
+
+            if (col.gameObject.CompareTag("Player"))
+            {
+                // 50 is the diference space between the EndPos position and the new platform pivot (which usually is on the center of the gameobject)
+                Vector3 NewPlatPos = new Vector3(EndPos.transform.position.x + 5f, EndPos.position.y, EndPos.position.z);
+                Instantiate(NextPlatformPrefab1, NewPlatPos, EndPos.transform.rotation);
+                instantiated = true;
+                StartCoroutine(DelPlatform());
+            }
+
         }
+
         
-    }
-    
-    IEnumerator DelHitRes()
-    {
-        yield return new WaitForSeconds(0.001f);
 
+        IEnumerator DelPlatform()
+        {
+            yield return new WaitForSeconds(DelTime);
+
+            if (MountainsGenerated > MountainsToGen)
+            {
+                MountainsGenerated -= MountainsToGen;
+            }
+            if (CloudsGenerated > CloudsToGen)
+            {
+                CloudsGenerated -= CloudsToGen;
+            }
+            Destroy(THISPlatform);
+        }
     }
 
-    IEnumerator DelPlatform()
-    {
-        yield return new WaitForSeconds(DelTime);
-        
-        if (MountainsGenerated > MountainsToGen)
-        {
-            MountainsGenerated -= MountainsToGen;
-        }
-        if (CloudsGenerated > CloudsToGen)
-        {
-            CloudsGenerated -= CloudsToGen;
-        }
-        Destroy(THISPlatform);
-    }
-}
