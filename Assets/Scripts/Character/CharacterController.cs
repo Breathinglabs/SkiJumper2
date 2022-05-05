@@ -97,6 +97,7 @@ public class CharacterController : MonoBehaviour
         PlayerRigi.velocity = new Vector2(PlayerVel, PlayerRigi.velocity.y);
         if (MicrophoneScript.IsBlowing)
         {
+            StartCoroutine(ForceToGoDow());
             BlowTimer += Time.deltaTime;
             ActualBlowTimer_UI.BlowTimer_F = BlowTimer;
             if (BlowTimer > ActMaxBlow)
