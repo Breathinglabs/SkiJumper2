@@ -111,7 +111,7 @@ public class CharacterController : MonoBehaviour
                 Save();
             }
             PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, JumpQuant));
-           
+            
         }
     }
 
@@ -122,7 +122,12 @@ public class CharacterController : MonoBehaviour
             StartCoroutine(AngelAnim());
         }
     }
+    IEnumerator ForceToGoDow()
+    {
+        yield return new WaitForSeconds(BlowTimer+1.5f);
+        PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, -12.5f));
 
+    }
     IEnumerator FallTimerAfterReachSky()
     {
         yield return new WaitForSeconds(4.5f);
