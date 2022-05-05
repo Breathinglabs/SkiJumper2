@@ -1009,8 +1009,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6276380684638146337}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.48388, y: -2.1632, z: 0}
-  m_LocalScale: {x: 0.014582844, y: 1, z: 1}
+  m_LocalPosition: {x: 0.463125, y: -2.1632, z: 0}
+  m_LocalScale: {x: 0.0145828435, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7451944956248617117}
   m_RootOrder: 0
@@ -1060,7 +1060,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 71.575165, y: 4.1864777}
+  m_Size: {x: 68.7287, y: 4.1864777}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1166,7 +1166,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7451944956652787384}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: -0.37, z: 0}
+  m_LocalPosition: {x: 1.355, y: -0.58, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7451944956665897044}
@@ -1183,9 +1183,8 @@ GameObject:
   - component: {fileID: 7451944956665897044}
   - component: {fileID: 7451944956665897046}
   - component: {fileID: 7451944956665897045}
-  - component: {fileID: 5513936263921284553}
   m_Layer: 0
-  m_Name: Platform2
+  m_Name: StartPlatform
   m_TagString: Checker
   m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1199,7 +1198,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7451944956665897035}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.4631, y: 11.5, z: 0}
+  m_LocalPosition: {x: -0.4631, y: 0.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 7451944956912526316}
@@ -1257,52 +1256,15 @@ MonoBehaviour:
   AssetGen: {fileID: 7451944956912526316}
   Mountain: {fileID: 65426498318774704, guid: 735d3ba2a86c0db46840c0e42d16c7d8, type: 3}
   Clouds: {fileID: 4550036755843894858, guid: da72473c9971c0643b58ee23522825b3, type: 3}
-  Bird1: {fileID: 0}
-  Bird2: {fileID: 0}
-  Plane: {fileID: 0}
-  ToyPlane: {fileID: 0}
-  UFO: {fileID: 0}
   MountainsToGen: 5
   CloudsToGen: 10
-  MoveTime: 3
+  DelTime: 8
   deleted: 0
   SpawnOBJ: {fileID: 7451944955872738739}
   detected: 0
   instantiated: 0
-  GenBird1: 0
-  GenBird2: 0
-  GenPlane: 0
-  GenToyPlane: 0
-  GenUFO: 0
-  NewPlatPos: {x: 0, y: 0}
   MountainsGenerated: 0
   CloudsGenerated: 0
---- !u!61 &5513936263921284553
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7451944956665897035}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0.4649024, y: -0.40665483}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1.0042915, y: 0.63613033}
-  m_EdgeRadius: 0
 --- !u!1 &7451944956912526307
 GameObject:
   m_ObjectHideFlags: 0
@@ -1372,6 +1334,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7451944957297026337}
+  - component: {fileID: 7451944957297026342}
   m_Layer: 0
   m_Name: Platform2
   m_TagString: Floor
@@ -1394,6 +1357,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &7451944957297026342
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7451944957297026341}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &8040305020428605741
 GameObject:
   m_ObjectHideFlags: 0
