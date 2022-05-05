@@ -95,16 +95,16 @@ public class MicrophoneScript : MonoBehaviour
         levelMin = levelMin + 0.015f*Time.deltaTime;
         //Debug.Log("The Level Min is" + levelMax);
 
-        //Variance = 0;
+       Variance = 0;
       
         
         for (int i = 0; i < 699; i++)
         {
             
            ABSArray[i] = 100 * Mathf.Abs(DataArray[i]);
-       //   Variance = Math.Abs(ABSArray[i] - ABSArray[i + 1]);
+        //  Variance = Math.Abs(ABSArray[i] - ABSArray[i + 1]);
             
-            
+               
             if (ABSArray[i] > levelMax)
             {
                 levelMax = ABSArray[i];
