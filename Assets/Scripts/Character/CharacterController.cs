@@ -23,6 +23,9 @@ public class CharacterController : MonoBehaviour
     public static float BlowTimer;
     public float MaxBlowTimer;
     public float ActMaxBlow;
+    public SpriteRenderer PlayerSprite;
+    public Material PlayerMaterial;
+    public bool MuteAfterFall;
 
 
 
@@ -34,10 +37,14 @@ public class CharacterController : MonoBehaviour
         Ini_JumpQuant = JumpQuant;
         ImFallingDown = false;
         IReachedTheSky = false;
+        PlayerMaterial = PlayerSprite.material;
+        PlayerMaterial.SetInt("_Wings", 0);
         FallAfterReachingSky = false;
         ActMaxBlow = 0;
         Load();
         MaxBlow_UI.MaxBlowTimer_F = MaxBlowTimer;
+        AngelBehindYou.SetActive(false);
+        MuteAfterFall = false;
 
         //Initial Jump
         PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, 700));
@@ -54,6 +61,11 @@ public class CharacterController : MonoBehaviour
         if (Mathf.Abs(Ypos - transform.position.y) > 0.1F)
         {
             ImFallingDown = true;
+            if (ImFallingDown==true)
+            {
+               
+                PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, -JumpQuant));
+            }
 
         }
         Ypos = transform.position.y;
@@ -67,6 +79,10 @@ public class CharacterController : MonoBehaviour
         if (transform.position.y >= SkyLevel)
         {
             IReachedTheSky = true;
+        }
+        if (MuteAfterFall)
+        {
+            MicrophoneScript.IsBlowing = false;
         }
 
         // Conditions to win
@@ -95,9 +111,9 @@ public class CharacterController : MonoBehaviour
     private void FixedUpdate()
     {
         PlayerRigi.velocity = new Vector2(PlayerVel, PlayerRigi.velocity.y);
-        if (MicrophoneScript.IsBlowing)
+        if (MicrophoneScript.IsBlowing && GroundCheck.ImOnTheGround== true)
         {
-            StartCoroutine(ForceToGoDow());
+            //StartCoroutine(ForceToGoDow());
             BlowTimer += Time.deltaTime;
             ActualBlowTimer_UI.BlowTimer_F = BlowTimer;
             if (BlowTimer > ActMaxBlow)
@@ -105,12 +121,7 @@ public class CharacterController : MonoBehaviour
                 ActMaxBlow = BlowTimer;
                 MaxActualBlowTimer_UI.MaxActBlowTimer_F = ActMaxBlow;
             }
-            if (BlowTimer > MaxBlowTimer)
-            {
-                MaxBlowTimer = BlowTimer;
-                MaxBlow_UI.MaxBlowTimer_F = MaxBlowTimer;
-                Save();
-            }
+         
             PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, JumpQuant));
             
         }
@@ -123,12 +134,7 @@ public class CharacterController : MonoBehaviour
             StartCoroutine(AngelAnim());
         }
     }
-    IEnumerator ForceToGoDow()
-    {
-        yield return new WaitForSeconds(BlowTimer+1.5f);
-        PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, -12.5f));
-
-    }
+    
     IEnumerator FallTimerAfterReachSky()
     {
         yield return new WaitForSeconds(4.5f);
@@ -136,24 +142,21 @@ public class CharacterController : MonoBehaviour
     }
     IEnumerator AngelAnim()
     {
-        PlayerVel = 0.25f;
+        PlayerVel =PlayerVel/2f;
         JumpQuant = 0f;
+        PlayerMaterial.SetInt("_Wings", 1);
         AngelBehindYou.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
-        PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, 650));
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.1f);
+        PlayerRigi.AddForce(new Vector2(PlayerRigi.velocity.x, 800f));
+        yield return new WaitForSeconds(0.45f);
         PlayerVel = Ini_PlayerVel;
+        PlayerMaterial.SetInt("_Wings", 0);
         JumpQuant = Ini_JumpQuant;
         AngelBehindYou.SetActive(false);
     }
-
     private void Load()
     {
         MaxBlowTimer = PlayerPrefs.GetFloat("MaxBlow");
-    }
-    private void Save()
-    {
-        PlayerPrefs.SetFloat("MaxBlow", MaxBlowTimer);
     }
 
     /*

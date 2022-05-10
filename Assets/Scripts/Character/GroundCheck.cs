@@ -10,6 +10,8 @@ public class GroundCheck : MonoBehaviour
     public float AngelLives;
    // public ParticleSystem SnowParticles;
     public GameObject SnowPartShader;
+    public GameObject FireShader;
+
     public static bool ImOnTheGround;
     public bool ExitedGround;
     public Transform AngelSpawnerPos;
@@ -21,19 +23,37 @@ public class GroundCheck : MonoBehaviour
     {
        // SnowParticles.Stop();
         SnowPartShader.SetActive(false);
+        FireShader.SetActive(false);
+
         ExitedGround = false;
         AngelLives = 0;
     }
+
+    private void Update()
+    {
+        if (ImOnTheGrounCorrection == true)
+        {
+            OnTheGroundTimer = 0;
+            SnowPartShader.SetActive(false);
+            MyAnim.SetBool("OnTheAir", true);
+            ExitedGround = true;
+        }
+        if (CharacterController.ImFallingDown)
+        {
+            //MyAnim.SetBool("OnTheAir", false);
+            MyAnim.SetBool("Falling", true);
+        }
+    }
+
     void OnTriggerStay2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Floor"))
         {
+            CharacterController.ImFallingDown = false;
             ImOnTheGrounCorrection = false;
-          //  SnowParticles.Play();
             SnowPartShader.SetActive(true);
-            //MyAnim.SetBool("OnTheGround", true);
+            MyAnim.SetBool("Falling", false);
             MyAnim.SetBool("OnTheAir", false);
-
             ImOnTheGround = true;
             OnTheGroundTimer += Time.deltaTime;
                 if (OnTheGroundTimer >= 15f)
@@ -50,7 +70,6 @@ public class GroundCheck : MonoBehaviour
                         Debug.Log("You Loose :'(");
                     }
                 }
-            CharacterController.ImFallingDown = false;
         }
         
     }
@@ -58,20 +77,16 @@ public class GroundCheck : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Floor"))
         {
-            MyAnim.SetBool("OnTheAir", true);
-            SnowPartShader.SetActive(false);
-            //  MyAnim.SetBool("OnTheGround", false);
-
             if (ImOnTheGrounCorrection == false)
             {
                 StartCoroutine(GroundTimerResetCorrection());
+                
             }
-            if (ImOnTheGrounCorrection == true)
+            if (ImOnTheGrounCorrection)
             {
-                OnTheGroundTimer = 0;
+                StartCoroutine(LockJump());
             }
-            ExitedGround = true;
-           // SnowParticles.Stop();
+
             AddTime = false;
         }
     }
@@ -81,11 +96,13 @@ public class GroundCheck : MonoBehaviour
        ImOnTheGrounCorrection = true;
 
     }
+     
     IEnumerator LockJump()
     {
-        yield return new WaitForSecondsRealtime(CharacterController.BlowTimer);
-       // CharacterController.LastBlowTimer = CharacterController.BlowTimer;
+        FireShader.SetActive(true);
+        yield return new WaitForSecondsRealtime(MicrophoneScript.BlowTimer);
+        // CharacterController.LastBlowTimer = CharacterController.BlowTimer;
+        FireShader.SetActive(false);
         ImOnTheGround = false;
-
     }
 }

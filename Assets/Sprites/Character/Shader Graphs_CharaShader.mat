@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FireGradient
-  m_Shader: {fileID: -6465566751694194690, guid: 43cf47f59d0c0244ba8aa742d1c7ea3e, type: 3}
+  m_Name: Shader Graphs_CharaShader
+  m_Shader: {fileID: -6465566751694194690, guid: 52f702d7d3404784dad63eb5fb1ce7f8, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,12 +19,12 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Texture2D_90c8e3a5b9294993bc8e879855b664cd:
-        m_Texture: {fileID: 2800000, guid: 8c4c1a1acf2955c478581abe396a6c7a, type: 3}
+    - Texture2D_1:
+        m_Texture: {fileID: 2800000, guid: 110e77b835b332f4aa5c970d50b2b81e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _MainText:
-        m_Texture: {fileID: 2800000, guid: 8c4c1a1acf2955c478581abe396a6c7a, type: 3}
+    - Texture2D_395d02e31fc642549a17c6d4c16873ba:
+        m_Texture: {fileID: 2800000, guid: dc37567137f20974ebd4d83007153387, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -40,15 +40,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - Vector1_44ea094a9d634efb8d4ebf4e824d2df2: -1.42
-    - Vector1_512b74883970440a802b89f92feaecac: 1
-    - Vector1_7406c9376db04c7482f65731e18d0774: 0.38
-    - Vector1_8f33a64556ef42f0afeef49ba75d7a85: 6.5
-    - Vector1_90b37e108258451c95531fbc4646000d: 0
-    - Vector1_ba5cb7396db64d899b6c269fd38f84bd: 15.39
-    - Vector1_ec720a7a180a4b6e80a71a7ee9fb36a9: 22.06
-    - Vector1_f8c63db8517943f3a37db5d1f6d77238: 1.44
+    - Vector1_c5c1522e1215430e8dbc620ac505150c: -0.21
+    - _Wings: 0
     m_Colors:
-    - Color_24245f5f64c840ae9fdba3dcd7398af9: {r: 1, g: 0.8392158, b: 0, a: 0}
-    - Color_381136adcae74533ac96ed86c1c7cd8d: {r: 1, g: 0, b: 0, a: 0}
+    - Color_5a2fb8e75f9448bb82a68c0fd6035293: {r: 0.6933962, g: 0.9967651, b: 1, a: 0}
   m_BuildTextureStacks: []

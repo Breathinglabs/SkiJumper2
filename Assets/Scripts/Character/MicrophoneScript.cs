@@ -1,4 +1,11 @@
-/* TODO: add speech detection in larger window and if true -> blow=1 && mute detetction for0.5 seconds*/
+/* 
+Hi,
+If you are going to use this same code in the future just make sure to delete all the code that makes reference to the UI, as you can guess it will be the responsible of the big majority of the issues 
+that the game gives you when you copy and paste directly the code.
+
+This code belongs to Breathing Labs in collaboration with Javier Molla Garcia (Gladark on GitHub), make sure to credit to both of us if used or modified it. 
+Thanks.
+ */
 
 using System.Collections;
 using System;
@@ -26,11 +33,14 @@ public class MicrophoneScript : MonoBehaviour
     public static bool IsBlowing;
     public float[] ABSArray = new float[700];
     public float[] DataArray = new float[700];
-    //public float[] AVRArray = new float[200];
     public float waveAbs;
    public float lastAbs;
     public float avrg;
     public float Variance;
+
+    public static float BlowTimer;
+    public static float MaxBlow, MaxActBlow;
+    public bool MuteAfterBlowBool;
 
     public bool Limit1, Limit2, Limit3;
     public int LastMicro;
@@ -42,36 +52,13 @@ public class MicrophoneScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Load();
         IsBlowing = false;
+        MuteAfterBlowBool = false;
         SelCheckMicro = ChangeMicro;
-        //ini_ChangeMicro = ChangeMicro;
         Limit1 = false;
         Limit2 = false;
-        /*
-         if (Conected)
-         {
-             /* if the Microphone list it's bigger than 0 (no Microphones), select one, the AudioJack is mostly readed as 0, but try
-                 with diferent numbers!!
-
-             if (Microphone.devices.Length > 0)
-             {
-                 SelDevice = Microphone.devices[ChangeMicro].ToString();
-                 MicroUsing_UI.CurrentMicro_S = SelDevice;
-                 audioSource.outputAudioMixerGroup = MixerGroupMicro;
-                 audioSource.clip = Microphone.Start(SelDevice, true, 20, AudioSettings.outputSampleRate);
-                 audioClip = audioSource.clip;
-             }
-             else
-             {
-                 Conected = false;
-             }
-         }
-         if (!Conected)
-         {
-             audioSource.outputAudioMixerGroup = MixerGroupMaster;
-             audioSource.clip = audioClip;
-         }
-         */
+        
     }
 
     private void Update()
@@ -79,6 +66,10 @@ public class MicrophoneScript : MonoBehaviour
         UseMicro();
         SizeBig(); //all our code: min, max, thr detection and avg comparison to thr which giver you boolean 1 or 0
         audioSource.Play(); //make the microphone work, this runs on everz frame because otherwise mic would stop working on each new update 
+        if (MuteAfterBlowBool)
+        {
+            IsBlowing = false;
+        }
         LevelMin_UI.LevelMinUI_F = levelMin;
         LevelMax_UI.LevelMaxUI_F = levelMax;
      //   Variance = 0; 
@@ -126,12 +117,28 @@ public class MicrophoneScript : MonoBehaviour
         Thresh = (levelMax - levelMin) / 1000 + levelMin;
         if (avrg > Thresh+0.9f /*&& IsBlowing == false && Variance<=3f*/)
         {
+            BlowTimer += Time.deltaTime;
+            ActualBlowTimer_UI.BlowTimer_F = BlowTimer;
+            if (BlowTimer > MaxBlow)
+            {
+                MaxBlow = BlowTimer;
+                MaxBlow_UI.MaxBlowTimer_F = MaxBlow;
+                Save();
+            }
+            if (BlowTimer > MaxActBlow)
+            {
+                MaxActBlow = BlowTimer;
+                MaxActualBlowTimer_UI.MaxActBlowTimer_F = MaxActBlow;
+            }
+
+            StartCoroutine(MuteAfterBlow());
             BlowChecK = true;
             IsBlowing = true;
             
         }
         if (avrg < Thresh + 0.01f /*&& IsBlowing*/)
         {
+            BlowTimer = 0;
             BlowChecK = false;
             IsBlowing = false;
         }
@@ -186,48 +193,7 @@ public class MicrophoneScript : MonoBehaviour
             audioSource.clip = audioClip;
         }
     }
-    /*
-    float SizeSmall()
-    {
-
-        float[] SmallWindow = new float[SWin64];
-        float SWinAver = SmallWindow.Average();
-        int micPosition = Microphone.GetPosition(null) - (SWin64 + 1); // null means the first microphone
-        if (micPosition < 0) return 0;
-        audioClip.GetData(SmallWindow, micPosition);
-        Average-= 0.0015f * Time.deltaTime;
-
-
-
-        for (int i = 0; i < SWin64; i++)
-        {
-            float wavePeak = Mathf.Abs(SmallWindow[i]);
-            Sum += wavePeak;
-
-            if (wavePeak > levelMax)
-            {
-                levelMax = wavePeak;
-            }
-            if (wavePeak < levelMin)
-            {
-                levelMin = wavePeak;
-                Debug.Log(levelMin);
-
-            }
-        }
-        Thresh = (levelMax - levelMin) / 2 + levelMin;
-        if (levelMax > Thresh && IsBlowing == false)
-        {
-            IsBlowing = true;
-        }
-        if (levelMin < Thresh && IsBlowing == true)
-        {
-            IsBlowing = false;
-        }
-
-        return levelMax * AudioSignalMultiplier;
-    }
-    */
+  
 
       IEnumerator TakeLastMicro()
     {
@@ -238,7 +204,22 @@ public class MicrophoneScript : MonoBehaviour
         SelCheckMicro = ChangeMicro;
 
     }
-
+    IEnumerator MuteAfterBlow()
+    {
+        yield return new WaitForSeconds(BlowTimer);
+        MuteAfterBlowBool = true;
+        yield return new WaitForSeconds(1f);
+        MuteAfterBlowBool = false;
+        
+    }
+    private void Save()
+    {
+        PlayerPrefs.SetFloat("MaxBlow", MaxBlow);
+    }
+    private void Load()
+    {
+        MaxBlow = PlayerPrefs.GetFloat("MaxBlow");
+    }
 }
 
 
