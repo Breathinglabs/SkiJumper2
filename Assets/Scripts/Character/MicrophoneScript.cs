@@ -82,7 +82,7 @@ public class MicrophoneScript : MonoBehaviour
         audioClip.GetData(DataArray, micPosition); //Take the microphone signal from the audio source
 
         // here we are decreasing max through time and increasing min in time
-        levelMax = levelMax - 0.15f*Time.deltaTime;
+        levelMax = levelMax - 10f*Time.deltaTime;
         levelMin = levelMin + 0.015f*Time.deltaTime;
         //Debug.Log("The Level Min is" + levelMax);
 
@@ -114,8 +114,8 @@ public class MicrophoneScript : MonoBehaviour
 
         ///////////////
         avrg = avrg / 256;
-        Thresh = (levelMax - levelMin) / 1000 + levelMin;
-        if (avrg > Thresh+0.9f /*&& IsBlowing == false && Variance<=3f*/)
+        Thresh = ((levelMax - levelMin) / 100 + levelMin);
+        if (avrg> Thresh+0.5f /*&& IsBlowing == false && Variance<=3f*/)
         {
             BlowTimer += Time.deltaTime;
             ActualBlowTimer_UI.BlowTimer_F = BlowTimer;
@@ -131,7 +131,7 @@ public class MicrophoneScript : MonoBehaviour
                 MaxActualBlowTimer_UI.MaxActBlowTimer_F = MaxActBlow;
             }
 
-            StartCoroutine(MuteAfterBlow());
+            //StartCoroutine(MuteAfterBlow());
             BlowChecK = true;
             IsBlowing = true;
             
@@ -139,10 +139,13 @@ public class MicrophoneScript : MonoBehaviour
         if (avrg < Thresh + 0.01f /*&& IsBlowing*/)
         {
             BlowTimer = 0;
+            ActualBlowTimer_UI.BlowTimer_F = BlowTimer;
             BlowChecK = false;
             IsBlowing = false;
         }
 
+
+        
         //float trueTresh = Thresh;
         Threshold_UI.ThresoldUI_F = Thresh;
         Average_UI.AvrgUI_F = avrg;
@@ -207,6 +210,7 @@ public class MicrophoneScript : MonoBehaviour
     IEnumerator MuteAfterBlow()
     {
         yield return new WaitForSeconds(BlowTimer);
+        Debug.Log("A New Start");
         MuteAfterBlowBool = true;
         yield return new WaitForSeconds(1f);
         MuteAfterBlowBool = false;
