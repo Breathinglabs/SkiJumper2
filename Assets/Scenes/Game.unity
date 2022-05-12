@@ -5874,7 +5874,7 @@ MonoBehaviour:
   - {fileID: 1715641907}
   m_Bounds:
     m_Center: {x: 0.10328448, y: -0.23760319, z: -0.03905874}
-    m_Extent: {x: 1.4615405, y: 1.1688803, z: 0.04967374}
+    m_Extent: {x: 1.4615407, y: 1.1688805, z: 0.04967374}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!95 &482886022
@@ -9441,7 +9441,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1354910655}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.35, y: 1.61, z: 0}
+  m_LocalPosition: {x: -5.76, y: 13.72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 482886020}
@@ -16780,7 +16780,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1793399757}
   m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 1, y: 16.7, z: 31.2}
+  m_LocalPosition: {x: 1224.3, y: 262.6, z: 31.2}
   m_LocalScale: {x: 44.010006, y: 158.23141, z: 0}
   m_Children: []
   m_Father: {fileID: 1354910659}
@@ -18299,6 +18299,67 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2157202900160340745
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 838737990677738903, guid: 5a13ff73f38fc0c4680c8d98827b2211, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5170266884950412333, guid: 5a13ff73f38fc0c4680c8d98827b2211, type: 3}
+      propertyPath: m_RootOrder
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 5170266884950412333, guid: 5a13ff73f38fc0c4680c8d98827b2211, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 67.96957
+      objectReference: {fileID: 0}
+    - target: {fileID: 5170266884950412333, guid: 5a13ff73f38fc0c4680c8d98827b2211, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 12.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5170266884950412333, guid: 5a13ff73f38fc0c4680c8d98827b2211, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5170266884950412333, guid: 5a13ff73f38fc0c4680c8d98827b2211, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5170266884950412333, guid: 5a13ff73f38fc0c4680c8d98827b2211, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5170266884950412333, guid: 5a13ff73f38fc0c4680c8d98827b2211, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5170266884950412333, guid: 5a13ff73f38fc0c4680c8d98827b2211, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5170266884950412333, guid: 5a13ff73f38fc0c4680c8d98827b2211, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5170266884950412333, guid: 5a13ff73f38fc0c4680c8d98827b2211, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5170266884950412333, guid: 5a13ff73f38fc0c4680c8d98827b2211, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5559727749635061414, guid: 5a13ff73f38fc0c4680c8d98827b2211, type: 3}
+      propertyPath: m_Name
+      value: Bird1Prefab
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5a13ff73f38fc0c4680c8d98827b2211, type: 3}
 --- !u!33 &2473872141437254596
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -18435,15 +18496,20 @@ MonoBehaviour:
   NextPlatformPrefab2: {fileID: 0}
   NextPlatformPrefab3: {fileID: 0}
   AssetGen: {fileID: 1704759338143250053}
-  Mountain: {fileID: 65426498318774704, guid: 735d3ba2a86c0db46840c0e42d16c7d8, type: 3}
-  Clouds: {fileID: 4550036755843894858, guid: da72473c9971c0643b58ee23522825b3, type: 3}
-  MountainsToGen: 5
-  CloudsToGen: 10
+  Bird1: {fileID: 0}
+  Bird2: {fileID: 0}
+  UFO: {fileID: 0}
+  Plane: {fileID: 0}
+  Toy_Plane: {fileID: 0}
+  GenBird1: 0
+  GenBird2: 0
+  GenUFO: 0
+  GenPlane: 0
+  GenToyPlane: 0
   DelTime: 10
   deleted: 0
   SpawnOBJ: {fileID: 3138372401207334285}
   detected: 0
-  instantiated: 0
   MountainsGenerated: 0
   CloudsGenerated: 0
 --- !u!4 &3313030660181834864

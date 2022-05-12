@@ -34,7 +34,7 @@ public class MicrophoneScript : MonoBehaviour
     public float[] ABSArray = new float[700];
     public float[] DataArray = new float[700];
     public float waveAbs;
-   public float lastAbs;
+    public float lastAbs;
     public float avrg;
     public float Variance;
 
@@ -118,6 +118,7 @@ public class MicrophoneScript : MonoBehaviour
         if (avrg> Thresh+0.5f /*&& IsBlowing == false && Variance<=3f*/)
         {
             BlowTimer += Time.deltaTime;
+            //StartCoroutine(MuteAfterBlow());
             ActualBlowTimer_UI.BlowTimer_F = BlowTimer;
             if (BlowTimer > MaxBlow)
             {
