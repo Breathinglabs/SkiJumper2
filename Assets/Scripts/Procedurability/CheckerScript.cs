@@ -32,7 +32,8 @@ public class CheckerScript : MonoBehaviour
             GenToyPlane = Random.Range(0, 6);
             if (GenToyPlane > 4)
             {
-                var NewToyPlane = Instantiate(Toy_Plane, AssetGen.parent.position, AssetGen.rotation);
+                Vector3 ToyPlanePos = new Vector3 (AssetGen.parent.position.x, AssetGen.parent.position.y+7, AssetGen.parent.position.z);
+                var NewToyPlane = Instantiate(Toy_Plane,ToyPlanePos, AssetGen.rotation);
                 Toy_Plane.transform.parent = gameObject.transform;
             }
         }
@@ -42,7 +43,8 @@ public class CheckerScript : MonoBehaviour
             GenBird1 = Random.Range(0, 2);
            if (GenBird1 == 1)
             {
-                var NewBird1 = Instantiate(Bird1, AssetGen.parent.position, AssetGen.rotation);
+                Vector3 Bird1Pos = new Vector3(AssetGen.parent.position.x, AssetGen.parent.position.y + 15, AssetGen.parent.position.z);
+                var NewBird1 = Instantiate(Bird1, Bird1Pos, AssetGen.rotation);
                 NewBird1.transform.parent = gameObject.transform;
             }
         }
@@ -54,7 +56,8 @@ public class CheckerScript : MonoBehaviour
             GenBird2 = Random.Range(0, 10);
             if (GenBird2 >= 8)
             {
-                var NewBird2 = Instantiate(Bird2, AssetGen.parent.position, AssetGen.rotation);
+                Vector3 Bird2Pos = new Vector3(AssetGen.parent.position.x, AssetGen.parent.position.y + 60, AssetGen.parent.position.z);
+                var NewBird2 = Instantiate(Bird2, Bird2Pos, AssetGen.rotation);
                 NewBird2.transform.parent = gameObject.transform;
             }
         }
@@ -64,7 +67,8 @@ public class CheckerScript : MonoBehaviour
             GenPlane = Random.Range(0, 10);
             if (GenPlane >= 6)
             {
-                var NewToyPlane = Instantiate(Plane, AssetGen.parent.position, AssetGen.rotation);
+                Vector3 PlanePos = new Vector3(AssetGen.parent.position.x, AssetGen.parent.position.y + 90, AssetGen.parent.position.z);
+                var NewPlane = Instantiate(Plane, PlanePos, AssetGen.rotation);
                 Plane.transform.parent = gameObject.transform;
             }
         }
@@ -75,7 +79,8 @@ public class CheckerScript : MonoBehaviour
             GenUFO = Random.Range(0, 10);
             if (GenUFO >= 9)
             {
-                var NewUFO = Instantiate(UFO, AssetGen.parent.position, AssetGen.rotation);
+                Vector3 UFOPos = new Vector3(AssetGen.parent.position.x, AssetGen.parent.position.y + 200, AssetGen.parent.position.z);
+                var NewUFO = Instantiate(UFO, UFOPos, AssetGen.rotation);
                 UFO.transform.parent = gameObject.transform;
             }
         }

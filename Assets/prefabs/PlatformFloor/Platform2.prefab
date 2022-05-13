@@ -5955,10 +5955,10 @@ MonoBehaviour:
   NextPlatformPrefab3: {fileID: 0}
   AssetGen: {fileID: 7451944956912526316}
   Bird1: {fileID: 5559727749635061414, guid: 5a13ff73f38fc0c4680c8d98827b2211, type: 3}
-  Bird2: {fileID: 0}
-  UFO: {fileID: 0}
-  Plane: {fileID: 0}
-  Toy_Plane: {fileID: 0}
+  Bird2: {fileID: 5035631045489894719, guid: e918eb45794560f419afadf16b06b235, type: 3}
+  UFO: {fileID: 2889136316049864950, guid: 3faf6efd22a7fd0478422724c44f84ad, type: 3}
+  Plane: {fileID: 4679476771988331190, guid: a3ef285a9d28d2246be749a1c3ad3b5a, type: 3}
+  Toy_Plane: {fileID: 6371405474232945660, guid: 69f3d5da6d831454382555c91a66ad21, type: 3}
   GenBird1: 0
   GenBird2: 0
   GenUFO: 0
