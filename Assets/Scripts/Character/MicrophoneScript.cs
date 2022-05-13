@@ -42,9 +42,10 @@ public class MicrophoneScript : MonoBehaviour
     public static float MaxBlow, MaxActBlow;
     public bool MuteAfterBlowBool;
 
-    public bool Limit1, Limit2, Limit3;
+    public bool Limit1, Limit2, LimitBadness;
     public int LastMicro;
 
+    public float Badness;
 
     public bool BlowChecK;
     
@@ -58,6 +59,8 @@ public class MicrophoneScript : MonoBehaviour
         SelCheckMicro = ChangeMicro;
         Limit1 = false;
         Limit2 = false;
+        LimitBadness = false;
+        Badness = 0;
         
     }
 
@@ -70,8 +73,21 @@ public class MicrophoneScript : MonoBehaviour
         {
             IsBlowing = false;
         }
+        Badness -= 0.0020f;
+        if (Badness<0f)
+        {
+            Badness = 0f;
+        }
+        if (Badness > 2f)
+        {
+            Badness = 2f;
+        }
+
+        // VAR
+        Baddnes_UI.BadnessUI_F=Badness;
         LevelMin_UI.LevelMinUI_F = levelMin;
         LevelMax_UI.LevelMaxUI_F = levelMax;
+        MuteAfterBlow_Script.MuteAfterBlowVar = MuteAfterBlowBool;
      //   Variance = 0; 
     }
 
@@ -115,8 +131,15 @@ public class MicrophoneScript : MonoBehaviour
         ///////////////
         avrg = avrg / 256;
         Thresh = ((levelMax - levelMin) / 100 + levelMin);
-        if (avrg> Thresh+0.5f /*&& IsBlowing == false && Variance<=3f*/)
+        if (avrg > Thresh + 0.5f && Badness < 1.00000005f/*&& IsBlowing == false && Variance<=3f*/)
         {
+          
+            if(LimitBadness==false)
+            {
+                Badness+= 1;
+                LimitBadness = true;
+            }
+            
             BlowTimer += Time.deltaTime;
             //StartCoroutine(MuteAfterBlow());
             ActualBlowTimer_UI.BlowTimer_F = BlowTimer;
@@ -143,6 +166,7 @@ public class MicrophoneScript : MonoBehaviour
             ActualBlowTimer_UI.BlowTimer_F = BlowTimer;
             BlowChecK = false;
             IsBlowing = false;
+            LimitBadness=false;
         }
 
 
@@ -213,7 +237,7 @@ public class MicrophoneScript : MonoBehaviour
         yield return new WaitForSeconds(BlowTimer);
         Debug.Log("A New Start");
         MuteAfterBlowBool = true;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(BlowTimer+1f);
         MuteAfterBlowBool = false;
         
     }
